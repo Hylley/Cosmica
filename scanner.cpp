@@ -1,10 +1,10 @@
 #include "headers/scanner.h"
 
-std::vector<std::vector<std::string>> GetTokens(std::string rawContent)
+std::vector<std::vector<std::string>> Tokenize(std::string raw)
 {
 	std::vector<std::vector<std::string>> lines; // To clarify: a vector of string vectors
 	
-	std::istringstream fileStream(rawContent);
+	std::istringstream fileStream(raw);
 	std::string line;
 	while(std::getline(fileStream, line))
 	{

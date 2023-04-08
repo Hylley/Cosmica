@@ -8,28 +8,25 @@ int	main(int argc, char	*argv[]) {
 	}
 
 	std::string filePath = argv[1];
-	std::ifstream input(filePath);
+	std::ifstream file(filePath);
 
-	if (!input.is_open()) {
+	if (!file.is_open()) {
 		std::cerr << "Failed to open path: " << filePath << std::endl;
 		return 1;
 	}
 
-	auto ss = std::ostringstream{};
-	std::ifstream input_file(filePath);
-	ss << input_file.rdbuf();
-	std::string content = ss.str();
+	std::ostringstream stringStream = std::ostringstream{};
+	stringStream << file.rdbuf();
+	std::string content = stringStream.str();
 
-	std::vector<std::vector<std::string>> tokens = GetTokens(content);
-	int linesVectorSize = tokens.size();
-	
-	for(int i = 0; i < linesVectorSize; i++)
+	// Create a vector of string vectors calling the "Tokenize" function from the Scanner.
+	std::vector<std::vector<std::string>> tokens = Tokenize(content);
+
+	// Check for grammar erros
+	int lines = tokens.size();
+	for(int i = 0; i < lines; i++)
 	{
-		int lineVectorSize = tokens[i].size();
-		for(int j = 0; j < lineVectorSize; j++)
-		{
-			std::cout << tokens[i][j] << std::endl;
-		}
+		
 	}
 
 	return 0;
