@@ -1,3 +1,9 @@
+-- Eu sou um comentário!
+
+--[[
+	Eu sou um comentário ainda maior!
+]]
+
 bool variável = sim
 
 se variável == sim

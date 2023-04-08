@@ -1,6 +1,6 @@
 #include "headers/scanner.h"
 
-std::vector<std::vector<std::string>> Tokenize(std::string raw)
+std::vector<std::vector<std::string>> Lexer(std::string raw)
 {
 	std::vector<std::vector<std::string>> lines; // To clarify: a vector of string vectors
 	

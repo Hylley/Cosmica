@@ -24,13 +24,10 @@ int	main(int argc, char	*argv[]) {
 	stringStream << file.rdbuf();
 	std::string content = stringStream.str();
 
-	/* The "Tokenize" function return a vector for each line in the file
+	/* The "Lexer" function return a vector for each line in the file
 	containing the tokens respective to each one. */
-	std::vector<std::vector<std::string>> linesVector = Tokenize(content);
-
-	
-
-	// Abstract Syntax Tree
+	std::vector<std::vector<std::string>> linesVector = Lexer(content);
+	BlockNode abstractSyntaxTreeFirstNode = GenerateAbstractSyntaxTree(linesVector);
 
 
 	return 0;
