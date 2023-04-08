@@ -1,4 +1,9 @@
 #include "headers/prch.h"
+#include "headers/debug.h"
+#include "headers/scanner.h"
+#include "headers/parser.h"
+#include "headers/interpreter.h"
+#include "headers/syntree.h"
 
 int	main(int argc, char	*argv[]) {
 	if(argc	< 2)
@@ -19,15 +24,14 @@ int	main(int argc, char	*argv[]) {
 	stringStream << file.rdbuf();
 	std::string content = stringStream.str();
 
-	// Create a vector of string vectors calling the "Tokenize" function from the Scanner.
-	std::vector<std::vector<std::string>> tokens = Tokenize(content);
+	/* The "Tokenize" function return a vector for each line in the file
+	containing the tokens respective to each one. */
+	std::vector<std::vector<std::string>> linesVector = Tokenize(content);
 
-	// Check for grammar erros
-	int lines = tokens.size();
-	for(int i = 0; i < lines; i++)
-	{
-		
-	}
+	
+
+	// Abstract Syntax Tree
+
 
 	return 0;
 }

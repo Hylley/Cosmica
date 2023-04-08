@@ -1,5 +1,7 @@
 g++ prch.cpp^
+	debug.cpp^
 	scanner.cpp^
 	parser.cpp^
-	debug.cpp^
+	interpreter.cpp^
+	syntree.cpp^
 	-o prch.exe

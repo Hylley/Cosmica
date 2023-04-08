@@ -7,9 +7,4 @@
 #include <string>
 #include <vector>
 
-#include "debug.h"
-#include "scanner.h"
-#include "parser.h"
-#include "interpreter.h"
-
 #endif

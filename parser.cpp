@@ -1,6 +1,7 @@
 #include "headers/parser.h"
+#include "headers/syntree.h"
 
-bool VerifyErrors()
+void GenerateAbstractSyntaxTree()
 {
-	return true;
+
 }
