@@ -20,11 +20,18 @@ std::vector<std::string> SplitLine(std::string &line)
 	std::vector<std::string> tokens;
 	tokens.push_back(std::string());
 
-	std::string token;
+	bool isString = false;
 	for(int i = 0; i < length; i++)
 	{
 		char character = line[i];
-		if(character == ' ')
+
+		if(character == '\'' || character == '\"')
+		{
+			isString = !isString;
+		}
+
+		// Hardcoded else-if but I DON'T CARE OK, IF IT WORKS, IT WORKS
+		if(character == ' ' &&  !isString && tokens.back() != "entretanto,")
 		{
 			tokens.push_back(std::string());
 			continue;
