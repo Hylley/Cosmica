@@ -1,23 +1,37 @@
 #include "headers/scanner.h"
 
-std::vector<std::vector<std::string>> Lexer(std::string raw)
+bool verifyBeyond(std::string fullLine, int pivotIndex, std::string verifier)
 {
-	std::vector<std::vector<std::string>> lines; // To clarify: a vector of string vectors
+	if(fullLine.length() < pivotIndex + (verifier.length() - 1))
+		return false;
 	
-	std::istringstream fileStream(raw);
-	std::string line;
-	while(std::getline(fileStream, line))
+	unsigned int length = verifier.length();
+	for(int i = 0; i < length; i++)
 	{
-		lines.push_back(SplitLine(line));
+		if(fullLine[pivotIndex + i] != verifier[i])
+			return false;
 	}
 
-	return lines;
+	return true;
 }
 
-std::vector<std::string> SplitLine(std::string &line)
+void ConcatCharWithTheLastToken(std::vector<std::string>& vector, char character)
 {
+	vector.back() = vector.back() + character;
+}
+
+void CreateNewToken(std::vector<std::string>& vector)
+{
+	vector.push_back(std::string(""));
+}
+
+std::vector<std::string> ScanLine(std::string& line, bool& isMultiCommented)
+{
+	std::cout << line << std::endl;
+
 	int length = line.length();
 	std::vector<std::string> tokens;
+	return tokens;
 	tokens.push_back(std::string());
 
 	bool isString = false;
@@ -28,17 +42,62 @@ std::vector<std::string> SplitLine(std::string &line)
 		if(character == '\'' || character == '\"')
 		{
 			isString = !isString;
+			
+			if(!isString)
+			{
+				ConcatCharWithTheLastToken(tokens, character);
+				CreateNewToken(tokens);
+				continue;
+			}
 		}
 
-		// Hardcoded else-if but I DON'T CARE OK, IF IT WORKS, IT WORKS
-		if(character == ' ' &&  !isString && tokens.back() != "entretanto,")
+		// If we're interating through a string, concat everything until isn't anymore.
+		if(isString)
 		{
-			tokens.push_back(std::string());
+			ConcatCharWithTheLastToken(tokens, character);
 			continue;
 		}
 
-		tokens.back() = tokens.back() + character;
+
+		// Strings will never pass through the rest of this code, so for now on, it's safe.
+
+
+		// Early split in spaces
+		if(character == ' ' && tokens.back() != "entretanto,")
+		{
+			CreateNewToken(tokens);
+			continue;			
+		}
+
+		// Characters thta will split the string, but not included in the final result
+		if(character == '(')
+		{
+			CreateNewToken(tokens);
+			continue;
+		}
+
+		ConcatCharWithTheLastToken(tokens, character);
+
+		// Characters that will split the string and be included in the final result
+		if(false)
+		{
+			CreateNewToken(tokens);
+		}
 	}
 
 	return tokens;
+}
+
+std::vector<std::vector<std::string>> Lexer(std::string raw)
+{
+	std::vector<std::vector<std::string>> lines; // To clarify: a vector of string vectors
+	
+	std::istringstream fileStream(raw);
+	std::string line;
+	bool isMultiCommented = false;
+	while(std::getline(fileStream, line))
+	{
+		lines.push_back(ScanLine(line, isMultiCommented));
+	}
+	return lines;
 }

@@ -1,13 +1,7 @@
--- Eu sou um comentário!
-
---[[
-	Eu sou um comentário ainda maior!
-]]
-
-bool variável = sim
+variável = sim
 
 se variável == sim
-	print('Eu sou lindo.')
+	print('Eu sou lindo.', 6)
 
 entretanto, se variável == não
 	print('Eu continuo sendo lindo, mas a variável agora é falsa.')
