@@ -1,7 +1,1 @@
-variável = sim
-
-se variável == sim
-	print('Eu sou lindo.', 6)
-
-entretanto, se variável == não
-	print('Eu continuo sendo lindo, mas a variável agora é falsa.')
+var = 3

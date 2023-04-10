@@ -38,6 +38,8 @@ class BlockNode : public Node
 		bool hasVariableInPool(VariableNode* variable);
 		LiteralNode* getVariableInPool(VariableNode* variable);
 
+		BlockNode() : name("§"), children(std::vector<Node*>()), functions(std::vector<Node*>()) {}
+
 	private:
 		std::unordered_map<std::string, LiteralNode*> symbolTable;
 };

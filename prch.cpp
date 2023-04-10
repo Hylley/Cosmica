@@ -4,6 +4,7 @@
 #include "headers/parser.h"
 #include "headers/interpreter.h"
 #include "headers/syntree.h"
+#include "headers/interpreter.h"
 
 int	main(int argc, char	*argv[]) {
 	if(argc	< 2)
@@ -24,11 +25,14 @@ int	main(int argc, char	*argv[]) {
 	stringStream << file.rdbuf();
 	std::string content = stringStream.str();
 
-	/* The "Lexer" function return a vector for each line in the file
-	containing the tokens respective to each one. */
-	std::vector<std::vector<std::string>> linesVector = Lexer(content);
-	BlockNode abstractSyntaxTreeFirstNode = GenerateAbstractSyntaxTree(linesVector);
+	// Instantiate main parent node
+	BlockNode parentNode = BlockNode();
+	// Pass the raw file to the lexer, it will check for errors
+	// and automatically generate the AST into the given node.
+	Lexer(content, parentNode);
 
+	// Execute the code
+	Execute(parentNode);
 
 	return 0;
 }

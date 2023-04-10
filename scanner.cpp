@@ -1,103 +1,62 @@
 #include "headers/scanner.h"
 
-bool verifyBeyond(std::string fullLine, int pivotIndex, std::string verifier)
+bool Fits(const std::string& str, const std::string& model) {
+    size_t strIndex = 0;
+    size_t modelIndex = 0;
+    char lastChar = '\0'; // Track the last non-wildcard character in the model
+
+    while (strIndex < str.size() && modelIndex < model.size()) {
+        if (model[modelIndex] == '%') {
+            modelIndex++;
+            while (strIndex < str.size() && modelIndex < model.size() && str[strIndex] != model[modelIndex]) {
+                strIndex++;
+            }
+            if (strIndex == str.size()) {
+                return false;
+            }
+            lastChar = '\0'; // Reset the last non-wildcard character in the model
+        }
+        else if (str[strIndex] == model[modelIndex]) {
+            strIndex++;
+            modelIndex++;
+            if (model[modelIndex - 1] != '%') {
+                lastChar = model[modelIndex - 1];
+            }
+        }
+        else {
+            if (lastChar != '\0' && model[modelIndex] != '%') {
+                // If the current model character is the same as the last non-wildcard character
+                // and there is no matching character in the string, return false
+                if (lastChar == model[modelIndex]) {
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
+
+    while (modelIndex < model.size() && model[modelIndex] == '%') {
+        modelIndex++;
+    }
+
+    return modelIndex == model.size();
+}
+
+void ScanLine(std::string& line, BlockNode& parent)
 {
-	if(fullLine.length() < pivotIndex + (verifier.length() - 1))
-		return false;
-	
-	unsigned int length = verifier.length();
-	for(int i = 0; i < length; i++)
+	if(Fits(line, "%==%"))
 	{
-		if(fullLine[pivotIndex + i] != verifier[i])
-			return false;
+		std::cout << "Funcionou!" << std::endl;
 	}
-
-	return true;
 }
 
-void ConcatCharWithTheLastToken(std::vector<std::string>& vector, char character)
+std::vector<std::string> Lexer(std::string& raw, BlockNode& parent)
 {
-	vector.back() = vector.back() + character;
-}
-
-void CreateNewToken(std::vector<std::string>& vector)
-{
-	vector.push_back(std::string(""));
-}
-
-std::vector<std::string> ScanLine(std::string& line, bool& isMultiCommented)
-{
-	std::cout << line << std::endl;
-
-	int length = line.length();
-	std::vector<std::string> tokens;
-	return tokens;
-	tokens.push_back(std::string());
-
-	bool isString = false;
-	for(int i = 0; i < length; i++)
-	{
-		char character = line[i];
-
-		if(character == '\'' || character == '\"')
-		{
-			isString = !isString;
-			
-			if(!isString)
-			{
-				ConcatCharWithTheLastToken(tokens, character);
-				CreateNewToken(tokens);
-				continue;
-			}
-		}
-
-		// If we're interating through a string, concat everything until isn't anymore.
-		if(isString)
-		{
-			ConcatCharWithTheLastToken(tokens, character);
-			continue;
-		}
-
-
-		// Strings will never pass through the rest of this code, so for now on, it's safe.
-
-
-		// Early split in spaces
-		if(character == ' ' && tokens.back() != "entretanto,")
-		{
-			CreateNewToken(tokens);
-			continue;			
-		}
-
-		// Characters thta will split the string, but not included in the final result
-		if(character == '(')
-		{
-			CreateNewToken(tokens);
-			continue;
-		}
-
-		ConcatCharWithTheLastToken(tokens, character);
-
-		// Characters that will split the string and be included in the final result
-		if(false)
-		{
-			CreateNewToken(tokens);
-		}
-	}
-
-	return tokens;
-}
-
-std::vector<std::vector<std::string>> Lexer(std::string raw)
-{
-	std::vector<std::vector<std::string>> lines; // To clarify: a vector of string vectors
-	
 	std::istringstream fileStream(raw);
 	std::string line;
 	bool isMultiCommented = false;
 	while(std::getline(fileStream, line))
 	{
-		lines.push_back(ScanLine(line, isMultiCommented));
+		ScanLine(line, parent);
 	}
-	return lines;
 }
