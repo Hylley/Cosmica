@@ -5,7 +5,7 @@
 #include "headers/interpreter.h"
 #include "headers/syntree.h"
 
-int	main(int argc, char	*argv[]) {
+int main(int argc, char	*argv[]) {
 	#if DEBUG_DEVELOPER_FEEDBACK
 	std::cout << "INIT" << std::endl;
 	#endif
