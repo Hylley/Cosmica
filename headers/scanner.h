@@ -7,9 +7,11 @@
 
 std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);
 
+extern std::regex invisibles;
+extern std::regex singleLineComment;
+extern std::regex multiLineComment[3];
 extern std::regex se;
 extern std::regex variableAssign;
 extern std::regex equalCompare;
-extern std::regex invisible;
 
 #endif
