@@ -16,6 +16,7 @@ typedef	enum
 	RuntimeError, // General error
 	SyntaxError,
 	ValueError,
+	TypeError,
 	ZeroDivisionError,
 	KeyboardInterrupt
 } ExcepctionType;

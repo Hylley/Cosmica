@@ -4,15 +4,14 @@
 #include "prch.h"
 #include "syntree.h"
 #include "debug.h"
-#include <regex>
+#include "parser.h"
+// #include <unordered_map>
 
+// std::unordered_map<std::string, std::any> dict;
 std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);
+std::vector<std::string> Tokenize(std::string const	&str, const	char delimiter);
+std::string findDataType(std::string& input);
+bool isValidDataType(std::string& value);
 
-extern std::regex invisibles;
-extern std::regex singleLineComment;
-extern std::regex multiLineComment[3];
-extern std::regex se;
-extern std::regex variableAssign;
-extern std::regex equalCompare;
 
 #endif

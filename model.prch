@@ -9,7 +9,7 @@
 --[[
 		Como ficou óbvio, comentários são feitos utiliando duas
 	formas diferentes: dois hífens para comentários singulares e
-	dois ífens seguidos de dois colchetes para comentários compostos
+	dois ífens, seguidos de dois colchetes, para comentários compostos
 	(fechando com dois colchetes novamente).
 ]]
 
@@ -26,18 +26,14 @@
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.
 ]]
-int inteiro = 3
+exemplo = 45
 
 
 
-se var == 4:
-	kkkkkkkkk
+--[[se var == 4:
 entretanto, se var == 5:
-	kkkkkkkkk
 entretanto:
-	kkkkkkkkkk
 
 função(int x, flut z):
-	kkkkkkkkkk
 
-função()
+função()]]

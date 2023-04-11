@@ -1,70 +1,37 @@
 #include "headers/scanner.h"
 
-// Regular expressions pre-compilation
-std::regex invisibles("^[ \t\n]*$");
-std::regex singleLineComment("(\t*)--[^\\[]+");			// Handle comments
-std::regex multiLineComment[3] = {
-	std::regex ("(\t*)--\\[\\[(.*)"), // Open comment
-	std::regex ("(.*)\\]\\]"),	// Correct close comment
-	std::regex ("(.*)\\]\\](.*)")	// Incorrrect close comment
-};
-std::regex se("(\t*)se (.*):");				// Handle IFs
-std::regex variableAssign("(\t*)(int|cadeia|flut|bool)?(.*)=[ ]*([^ ]*)");
-
-void ScanLine(std::string& line, BlockNode&	parent, std::string& fileName, int lineNumber, bool& isMultiCommented)
-{
-	#if DEBUG_SHOW_LINES
-	std::cout << lineNumber << " " << line << std::endl;
-	#endif
-
-	std::smatch matches;
-	
-	// Handle comments
-	if(std::regex_match(line, matches, singleLineComment))
-		return;
-	if(std::regex_match(line, matches, multiLineComment[0]) && !isMultiCommented)
-	{
-		isMultiCommented = true;
-		return;
-	}
-	if(std::regex_match(line, matches, multiLineComment[1]) && isMultiCommented)
-	{
-		isMultiCommented = false;
-		return;
-		
-	}else if(std::regex_match(line, matches, multiLineComment[2]) && isMultiCommented)
-	{
-		isMultiCommented = false;
-	}
-
-	if(isMultiCommented)
-		return;
-
-	// Handle IF
-	if(std::regex_match(line, matches, se))
-	{
-		return;
-	}
-
-	if(std::regex_match(line, matches, variableAssign))
-	{
-		return;
-	}
-
-	if(std::regex_match(line, matches, invisibles))
-		return;
-
-	ThrowException(SyntaxError, fileName, lineNumber, "Could not resolve: \"" + line + "\"");
-}
-
-std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName)
+std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
 {
 	std::istringstream fileStream(raw);
 	std::string	line;
 	bool isMultiCommented =	false;
-	int lineCount = 0;
+	int	lineCount =	0;
 	while(std::getline(fileStream, line))
 	{
-		ScanLine(line, parent, fileName, ++lineCount, isMultiCommented);
+		Parse(line,	parent,	fileName, ++lineCount, isMultiCommented);
 	}
+}
+
+//Not only tokenize the string, but also trim irrelevant spaces in the surroundings
+std::vector<std::string> Tokenize(std::string const	&str, const	char delimiter)
+{
+	std::vector<std::string> out;
+	std::stringstream stringStream(str);
+
+	std::string	s;
+	while (std::getline(stringStream,	s, delimiter)) {	
+		out.push_back(s); 
+	}
+
+	return out;
+}
+
+std::string findDataType(std::string& input)
+{
+	
+}
+
+bool isValidDataType(std::string& value)
+{
+	return value == "int" || value == "flut"|| value == "cadeia" || value == "bool";
 }
