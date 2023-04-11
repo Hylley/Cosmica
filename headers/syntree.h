@@ -2,6 +2,7 @@
 #define	SYNTREE_H
 
 #include "prch.h"
+#include "debug.h"
 #include <unordered_map>
 
 // Building blocks
@@ -15,9 +16,11 @@ class Node
 class LiteralNode : public Node
 {
 	public:
-		enum class Type { BOOL, INT, FLUT, CADEIA };
+		enum class Type { BOOL, INT, FLUT, FITA };
 		Type type;
 		std::string value;
+
+		void SetType(std::string newType);
 };
 
 class VariableNode : public Node

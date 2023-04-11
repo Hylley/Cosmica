@@ -1,6 +1,6 @@
 #include "headers/scanner.h"
 
-std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
+void Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
 {
 	std::istringstream fileStream(raw);
 	std::string	line;
@@ -43,6 +43,9 @@ std::vector<std::string> Tokenize(std::string &str, char delimiter)
 
 std::string findDataType(std::string& value)
 {
+	if(value == "sim" || value == "não" || value == "verdadeiro" || value == "falso" || value == "crocodilo")
+		return "bool";
+		
 	if(std::regex_match(value, std::regex("^[0-9]+$")))
 		return "int";
 	
@@ -50,17 +53,14 @@ std::string findDataType(std::string& value)
 		return "flut";
 	
 	if(std::regex_match(value, std::regex("\'(.*)\n*(.*)\'")))
-		return "cadeia";
-	
-	if(value == "sim" || value == "não" || value == "verdadeiro" || value == "falso" || value == "crocodilo")
-		return "bool";
+		return "fita";
 	
 	return "null";
 }
 
 bool isValidDataType(std::string& value)
 {
-	return value == "int" || value == "flut"|| value == "cadeia" || value == "bool";
+	return value == "int" || value == "flut"|| value == "fita" || value == "bool";
 }
 
 bool isInt(std::string& value)

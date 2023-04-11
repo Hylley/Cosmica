@@ -22,6 +22,7 @@ typedef	enum
 } ExcepctionType;
 
 void ThrowException(ExcepctionType exception, std::string fileName, int line, std::string details);
+void ThrowInternal(std::string details);
 void Terminate();
 
 #endif

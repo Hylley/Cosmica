@@ -6,6 +6,9 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <windows.h>
+#include <signal.h>
+
 
 extern std::string reserved_keywords[9];
 

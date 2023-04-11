@@ -4,4 +4,5 @@ g++ prch.cpp^
 	parser.cpp^
 	interpreter.cpp^
 	syntree.cpp^
+	-finput-charset=UTF-8^
 	-o prch.exe

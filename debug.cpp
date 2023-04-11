@@ -33,6 +33,11 @@ void ThrowException(ExcepctionType exception, std::string fileName, int line, st
 	exit(1);
 }
 
+void ThrowInternal(std::string details)
+{
+	std::cerr << "InternalError: " << details << std::endl;
+}
+
 void Terminate()
 {
 	#if DEBUG_DEVELOPER_FEEDBACK
