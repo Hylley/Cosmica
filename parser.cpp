@@ -102,13 +102,15 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 	std::cout << "Variable value: " << variableValue << std::endl;
 	#endif
 
-	// I'm gonna make this works Idnt how
-	VariableNode node = VariableNode();
-	LiteralNode literal = LiteralNode();
-	literal.SetType(dataType);
-	literal.value = variableValue;
-	node.name = variableName;
-	node.literal = &literal;
+	// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
+	VariableNode* node = new VariableNode();
+	LiteralNode* literal = new LiteralNode();
+	literal->SetType(dataType);
+	literal->value = variableValue;
+	node->name = variableName;
+	node->literal = literal;
+	
+	parent.children.push_back(node);
 
 	return;
 }
