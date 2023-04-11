@@ -5,6 +5,19 @@
 #include "headers/interpreter.h"
 #include "headers/syntree.h"
 
+std::string reserved_keywords[9] =
+{
+	":",
+	"bool",
+	"int",
+	"flut",
+	"cadeia",
+	"se",
+	"entretanto",
+	"entretanto,",
+	"entretanto, "
+};
+
 int main(int argc, char	*argv[]) {
 	#if DEBUG_DEVELOPER_FEEDBACK
 	std::cout << "INIT" << std::endl;

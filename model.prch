@@ -26,14 +26,4 @@
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.
 ]]
-exemplo = 45
-
-
-
---[[se var == 4:
-entretanto, se var == 5:
-entretanto:
-
-função(int x, flut z):
-
-função()]]
+cadeia cadeia = "ggff"

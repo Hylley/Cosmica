@@ -10,6 +10,7 @@
 extern std::regex invisibles;
 extern std::regex singleLineComment;
 extern std::regex multiLineComment[3];
+extern std::regex stringLiteral;
 extern std::regex ifCase[3];
 extern std::regex variableAssign;
 extern std::regex equalCompare;

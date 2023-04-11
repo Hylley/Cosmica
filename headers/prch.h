@@ -7,4 +7,6 @@
 #include <string>
 #include <vector>
 
+extern std::string reserved_keywords[9];
+
 #endif

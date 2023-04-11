@@ -12,19 +12,19 @@ class Node
 		virtual ~Node() {}
 };
 
+class LiteralNode : public Node
+{
+	public:
+		enum class Type { BOOL, INT, FLUT, CADEIA };
+		Type type;
+		std::string value;
+};
 
 class VariableNode : public Node
 {
 	public:
 		std::string name;
-};
-
-class LiteralNode : public Node
-{
-	public:
-		enum class Type { BOOL, INT, FLOAT, DOUBLE, CHAR, STRING };
-		Type type;
-		std::string value;
+		LiteralNode* literal;
 };
 
 class BlockNode : public Node

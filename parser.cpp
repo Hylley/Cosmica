@@ -9,6 +9,7 @@ std::regex multiLineComment[3] =
 	std::regex ("(.*)\\]\\]"),	// Correct close comment
 	std::regex ("(.*)\\]\\](.*)")	// Incorrrect close comment
 };
+std::regex stringLiteral("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
 std::regex ifCase[3] =
 {
 	std::regex ("(\t*)se (.*):"), 	// IF
@@ -46,23 +47,11 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 	if(isMultiCommented)
 		return;
 
-	// IF
-	// if(std::regex_match(line, matches, ifCase[0]))
-	// {
-	// 	return;
-	// }
-
 	if(std::regex_match(line, matches, variableAssign))
 	{
 		std::string tabLevel = matches[1];
 		std::string leftSide = matches[2];
 		std::string rightSize = matches[5];
-		
-		#if DEBUG_DEVELOPER_FEEDBACK
-		std::cout << tabLevel << std::endl;
-		std::cout << leftSide << std::endl;
-		std::cout << rightSize << std::endl;
-		#endif
 
 		if(rightSize.empty())
 			ThrowException(ValueError, fileName, lineNumber, "\"" + rightSize + "\" não é uma declaração válida");
@@ -79,40 +68,36 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 			ThrowException(SyntaxError, fileName, lineNumber, "\"" + rightSize + "\" muitos valores para uma variável");
 
 		// We have a explicit variable type
+		std::string variableName;
 		std::string dataType;
+		std::string variableValue = rightTokens[0];
+
 		if(leftSideTokensSize == 2)
 		{
+			if(!isValidDataType(leftTokens[0]))
+				ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" não é uma tipo de dado válido");
+			if(leftTokens[0] != findDataType(variableValue))
+				ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" e \"" + variableValue + "\" <<  não correspondem ao mesmo tipo");
+
 			dataType = leftTokens[0];
+			variableName = leftTokens[1];
 		}else // We do not have explicit variable, so we need to figure it out
 		{
-			dataType = findDataType(rightSize);
+			variableName = leftTokens[0];
+			dataType = findDataType(variableValue);
 		}
 
-		if(!isValidDataType(leftTokens[0]))
-			ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" não é uma tipo de dado válido");
-	
+		if (std::find(std::begin(reserved_keywords), std::end(reserved_keywords), variableName) != std::end(reserved_keywords))
+			ThrowException(SyntaxError, fileName, lineNumber, "\"" + variableName + "\" é uma palavra reservada");
+
 		#if DEBUG_DEVELOPER_FEEDBACK
-		std::cout << "Explicit variable data type asign" << std::endl;
+		std::cout << "VARIALE ASIGN" << std::endl;
+		std::cout << "Variable name: " << variableName << std::endl;
+		std::cout << "Data type: " << dataType << std::endl;
+		std::cout << "Variable value: " << variableValue << std::endl;
 		#endif
 
 		return;
-
-		if(leftSideTokensSize == 1)
-		
-		// if(variableType.empty())
-		// {
-		// 	if(isInt(variableValue))
-		// 	{
-
-		// 	}
-		// }else if(!isValidDataType(variableType))
-		// {
-		// 	ThrowException(TypeError, fileName, lineNumber, "\"" + variableType + "\" não é um tipo de dado válido");
-		// }
-
-		// parent.children.push_back(
-
-		// );
 
 		return;
 	}
