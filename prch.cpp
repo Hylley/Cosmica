@@ -6,6 +6,10 @@
 #include "headers/syntree.h"
 
 int	main(int argc, char	*argv[]) {
+	#if DEBUG_DEVELOPER_FEEDBACK
+	std::cout << "INIT" << std::endl;
+	#endif
+
 	if(argc	< 2)
 	{
 		std::cerr << "No file provided." << std::endl;
@@ -29,9 +33,10 @@ int	main(int argc, char	*argv[]) {
 	// Pass the raw file to the lexer, it will check for errors
 	// and automatically generate the AST into the given node.
 	Lexer(content, parentNode, filePath);
-
 	// Execute the code
 	Execute(parentNode);
 
+
+	Terminate();
 	return 0;
 }

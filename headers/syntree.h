@@ -2,7 +2,6 @@
 #define	SYNTREE_H
 
 #include "prch.h"
-#include "debug.h"
 #include <unordered_map>
 
 // Building blocks

@@ -3,6 +3,7 @@
 
 #include "prch.h"
 #include "syntree.h"
+#include "debug.h"
 #include <regex>
 
 std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);

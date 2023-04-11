@@ -1,5 +1,8 @@
 #include "headers/debug.h"
 
+#if DEBUG_DEVELOPER_FEEDBACK
+std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+#endif
 
 void ThrowException(ExcepctionType exception, std::string fileName, int line, std::string details)
 {
@@ -24,7 +27,19 @@ void ThrowException(ExcepctionType exception, std::string fileName, int line, st
 			break;
 	}
 
-	std::cout << errorName << ": " << details << " at line " << line << " in " << fileName << std::endl;
+	std::cerr << errorName << ": " << details << " at line " << line << " in " << fileName << std::endl;
 
+	Terminate();
 	exit(1);
+}
+
+void Terminate()
+{
+	#if DEBUG_DEVELOPER_FEEDBACK
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	std::cout << "RUNTIME: " << duration.count() << " mls" << std::endl;
+	#endif
+
+	return;
 }

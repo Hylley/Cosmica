@@ -60,6 +60,15 @@
 		"map": "cpp",
 		"xtree": "cpp",
 		"algorithm": "cpp",
-		"regex": "cpp"
+		"regex": "cpp",
+		"chrono": "cpp",
+		"charconv": "cpp",
+		"format": "cpp",
+		"forward_list": "cpp",
+		"iomanip": "cpp",
+		"mutex": "cpp",
+		"ratio": "cpp",
+		"stop_token": "cpp",
+		"thread": "cpp"
 	}
 }

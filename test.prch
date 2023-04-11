@@ -1,6 +1,6 @@
 -- Bem-vindo à Prch!
 --[[
-		"Prch" (leia-se pêr-ch) é uma linguagem de programação
+		"Prch" (leia-se pêrr-tchi) é uma linguagem de programação
 	interpretada de alto nível gradualmente tipada, com uma
 	sintaxe simples, familiar e estética à língua portuguesa.
 ]]
@@ -21,7 +21,7 @@
 	o tipo de variável. Linguagens de "tipagem fraca" inferem o
 	tipo das variáveis baseado no valor condedido a ela.
 
-		No Prch, você pode optar por qualquer uma das duas!
+		Na Prch, você pode optar por qualquer uma das duas!
 
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.

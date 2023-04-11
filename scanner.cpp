@@ -13,6 +13,10 @@ std::regex variableAssign("(\t*)(int|cadeia|flut|bool)?(.*)=[ ]*([^ ]*)");
 
 void ScanLine(std::string& line, BlockNode&	parent, std::string& fileName, int lineNumber, bool& isMultiCommented)
 {
+	#if DEBUG_SHOW_LINES
+	std::cout << lineNumber << " " << line << std::endl;
+	#endif
+
 	std::smatch matches;
 	
 	// Handle comments
@@ -39,15 +43,11 @@ void ScanLine(std::string& line, BlockNode&	parent, std::string& fileName, int l
 	// Handle IF
 	if(std::regex_match(line, matches, se))
 	{
-		std::cout << matches[0] << std::endl;
-
 		return;
 	}
 
 	if(std::regex_match(line, matches, variableAssign))
 	{
-		std::cout << matches[0] << std::endl;
-
 		return;
 	}
 
