@@ -1,4 +1,4 @@
-int si == sim
+si = 5
 var = 3
 
 se var == 4:

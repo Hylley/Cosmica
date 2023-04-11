@@ -24,7 +24,7 @@ void ThrowException(ExcepctionType exception, std::string fileName, int line, st
 			break;
 	}
 
-	std::cout << errorName << ": \"" << details << "\" at line " << line << " in " << fileName << std::endl;
+	std::cout << errorName << ": " << details << " at line " << line << " in " << fileName << std::endl;
 
 	exit(1);
 }

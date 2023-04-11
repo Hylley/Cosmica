@@ -1,95 +1,41 @@
 #include "headers/scanner.h"
 
-bool Fits(std::string& str, std::string model) {
-    int i = 0, j = 0, m = str.length(), n = model.length();
-    while (i < m && j < n) {
-        if (model[j] == '%') {
-            // If the % character is the last character in the second string,
-            // then the first string must end at this point for the strings to fit
-            if (j == n - 1) {
-                return true;
-            }
-            // Otherwise, search for the next non-% character in the second string
-            char nextChar = model[j + 1];
-            int k = i;
-            while (k < m && str[k] != nextChar) {
-                k++;
-            }
-            // If the next non-% character is not found in the first string,
-            // then the strings don't fit
-            if (k == m) {
-                return false;
-            }
-            i = k + 1;
-            j += 2;
-        } else {
-            // If the current characters in the two strings don't match
-            // and the current character in the second string is not a %,
-            // the strings don't fit the pattern
-            if (str[i] != model[j]) {
-                return false;
-            }
-            i++;
-            j++;
-        }
-    }
-    // If we have reached the end of the second string, the strings fit the pattern
-    // regardless of the remaining characters in the first string
-    if (j == n) {
-        return true;
-    }
-    return false;
-}
+// REGEX PATTERNS
+std::regex se("(\t*)se (.*):"); // If
+std::regex variableAssign("(\t*)(int|cadeia|flut|bool)?(.*)=[ ]*([^ ]*)");
+std::regex invisibles("^[ \t\n]*$");
 
-void ScanLine(std::string& line, BlockNode& parent)
+void ScanLine(std::string& line, BlockNode&	parent, std::string& fileName, int lineNumber)
 {
-	// IF, ELSE, ELSE-IF
-	if(Fits(line, "se %:"))
+	std::smatch matches;
+	if(std::regex_match(line, matches, se))
 	{
-		std::cout << "IF" << std::endl;
-		return;
-	}else if(Fits(line, "entretanto:"))
-	{
-		std::cout << "ELSE" << std::endl;
-		return;
-	}else if(Fits(line, "entretanto, se %:"))
-	{
-		std::cout << "ELSE-IF" << std::endl;
+		std::cout << matches[0] << std::endl;
+
 		return;
 	}
 
-	// VARIABLE EQUAL ASIGN
-	if(Fits(line, "%==%"))
+	if(std::regex_match(line, matches, variableAssign))
 	{
-		std::cout << "EQUAL COMP" << std::endl;
+		std::cout << matches[0] << std::endl;
 
-		return;
-	}else if(Fits(line, "%=%"))
-	{
-		std::cout << "EQUAL" << std::endl;
 		return;
 	}
 
-	//FUNCTION DEFINITION AND CALL
-	if(Fits(line, "%(%):"))
-	{
-		std::cout << "FUNC DEF" << std::endl;
+	if(std::regex_match(line, matches, invisibles))
+		return;
 
-		return;
-	}else if(Fits(line, "%(%)"))
-	{
-		std::cout << "FUNC CALL" << std::endl;
-		return;
-	}
+	ThrowException(SyntaxError, fileName, lineNumber, "Could not resolve: \"" + line + "\"");
 }
 
-std::vector<std::string> Lexer(std::string& raw, BlockNode& parent)
+std::vector<std::string> Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName)
 {
 	std::istringstream fileStream(raw);
-	std::string line;
-	bool isMultiCommented = false;
+	std::string	line;
+	bool isMultiCommented =	false;
+	int lineCount = 0;
 	while(std::getline(fileStream, line))
 	{
-		ScanLine(line, parent);
+		ScanLine(line, parent, fileName, ++lineCount);
 	}
 }

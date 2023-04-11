@@ -4,7 +4,6 @@
 #include "headers/parser.h"
 #include "headers/interpreter.h"
 #include "headers/syntree.h"
-#include "headers/interpreter.h"
 
 int	main(int argc, char	*argv[]) {
 	if(argc	< 2)
@@ -29,7 +28,7 @@ int	main(int argc, char	*argv[]) {
 	BlockNode parentNode = BlockNode();
 	// Pass the raw file to the lexer, it will check for errors
 	// and automatically generate the AST into the given node.
-	Lexer(content, parentNode);
+	Lexer(content, parentNode, filePath);
 
 	// Execute the code
 	Execute(parentNode);
