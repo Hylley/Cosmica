@@ -26,7 +26,10 @@
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.
 ]]
-fita texto = "AAA"
-int número = 56
-número_flutuante = 45.6
-valor_booleano = sim
+
+-- O texto de boas vindas vai aqui:
+fita boas_vindas! = "Boas Vindas à PRCH!"
+
+-- Mude o valor dessa variável para acessar partes diferentes
+-- da documentação! (0 a ?)
+int página = 0
