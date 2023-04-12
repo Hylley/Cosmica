@@ -26,4 +26,4 @@
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.
 ]]
-fita cadeia = 'ggff'
+int número = 45
