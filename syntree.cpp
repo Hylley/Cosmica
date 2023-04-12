@@ -1,14 +1,28 @@
 #include "headers/syntree.h"
 
-bool BlockNode::hasVariableInPool(VariableNode* variable)
+bool BlockNode::hasVariableInPool(std::string variableName)
 {
-	return symbolTable.count(variable->name);
+	return symbolTable.count(variableName);
 }
 
-LiteralNode* BlockNode::getVariableInPool(VariableNode* variable)
+LiteralNode* BlockNode::getVariableInPool(std::string variableName)
 {
-	return symbolTable[variable->name];
+	return symbolTable[variableName];
 }
+
+void BlockNode::changeVariableInPool(std::string variableName, LiteralNode* newValue)
+{
+	LiteralNode* oldValue = symbolTable[variableName];
+	symbolTable[variableName] = newValue;
+	delete oldValue;
+
+}
+
+void BlockNode::addVariableInPool(std::string variableName, LiteralNode* newValue)
+{
+	symbolTable[variableName] = newValue;
+}
+
 
 void LiteralNode::SetType(std::string newType)
 {
@@ -17,5 +31,5 @@ void LiteralNode::SetType(std::string newType)
 	if(newType == "flut") {type = Type::FLUT; return; }
 	if(newType == "fita") {type = Type::FITA; return; }
 
-	ThrowInternal("None valid type provided at variable asign (syntree.cpp, line 20)");
+	ThrowInternal("None valid type provided at variable asign (syntree.cpp, line 34)");
 }

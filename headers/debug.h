@@ -5,6 +5,7 @@
 
 #define DEBUG_DEVELOPER_FEEDBACK false
 #define DEBUG_SHOW_LINES false
+#define DEBUG_SHOW_GLOBAL_VARIABLES true
 
 #if DEBUG_DEVELOPER_FEEDBACK
 #include <chrono>

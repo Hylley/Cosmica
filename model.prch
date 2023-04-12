@@ -26,4 +26,7 @@
 		"int exemplo = 0" e "exemplo = 0" são, essencialmente, a
 	mesma coisa. Recomenda-se, entretanto, tipagem forte.
 ]]
-int número = 45
+fita texto = "AAA"
+int número = 56
+número_flutuante = 45.6
+valor_booleano = sim

@@ -5,6 +5,8 @@
 #include "debug.h"
 #include <unordered_map>
 
+enum class Type { BOOL, INT, FLUT, FITA };
+
 // Building blocks
 
 class Node
@@ -16,14 +18,13 @@ class Node
 class LiteralNode : public Node
 {
 	public:
-		enum class Type { BOOL, INT, FLUT, FITA };
 		Type type;
 		std::string value;
 
 		void SetType(std::string newType);
 };
 
-class VariableNode : public Node
+class VariablAssign : public Node
 {
 	public:
 		std::string name;
@@ -36,14 +37,15 @@ class BlockNode : public Node
 		std::string name;
 		std::vector<Node*> children;
 		std::vector<Node*> functions;
+		std::unordered_map<std::string, LiteralNode*> symbolTable;
 
-		bool hasVariableInPool(VariableNode* variable);
-		LiteralNode* getVariableInPool(VariableNode* variable);
+		bool hasVariableInPool(std::string variableName);
+		LiteralNode* getVariableInPool(std::string variableName);
+		void changeVariableInPool(std::string variableName, LiteralNode* newValue);
+		void addVariableInPool(std::string variableName, LiteralNode* newValue);
 
 		BlockNode() : name("§"), children(std::vector<Node*>()), functions(std::vector<Node*>()) {}
 
-	private:
-		std::unordered_map<std::string, LiteralNode*> symbolTable;
 };
 
 // Basic Operations

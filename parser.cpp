@@ -74,7 +74,7 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 		if(leftSideTokensSize == 2)
 		{
 			if(!isValidDataType(leftTokens[0]))
-				ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" não é uma tipo de dado válido");
+				ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" não é um tipo de dado válido");
 			if(leftTokens[0] != findDataType(variableValue))
 				ThrowException(ValueError, fileName, lineNumber, "\"" + leftTokens[0] + "\" e " + variableValue + " não correspondem ao mesmo tipo");
 
@@ -84,6 +84,9 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 		{
 			variableName = leftTokens[0];
 			dataType = findDataType(variableValue);
+
+			if(dataType == "null")
+				ThrowException(ValueError, fileName, lineNumber, "\"" + variableValue + "\" não é um tipo de dado válido");
 		}
 
 		if (std::find(std::begin(reserved_keywords), std::end(reserved_keywords), variableName) != std::end(reserved_keywords))
@@ -97,7 +100,7 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 		#endif
 
 		// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
-		VariableNode* node = new VariableNode();
+		VariablAssign* node = new VariablAssign();
 		LiteralNode* literal = new LiteralNode();
 		literal->SetType(dataType);
 		literal->value = variableValue;
