@@ -2,7 +2,7 @@
 
 // Regular expressions pre-compilation
 std::regex invisibles("^[ \t\n]*$");
-std::regex singleLineComment("(\t*)--[^\\[]+");			// Handle comments
+std::regex singleLineComment("(\t*)(.*)[ ]*--[^\\[]+");			// Handle comments
 std::regex multiLineComment[3] =
 {
 	std::regex ("(\t*)--\\[\\[(.*)"), // Open comment
@@ -43,7 +43,9 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 	else
 	{
 		if(std::regex_match(line, matches, singleLineComment))
-			return;
+			line = matches[2];
+			if(line.empty())
+				return;
 		if(std::regex_match(line, matches, multiLineComment[0]))
 		{
 			isMultiCommented = true;
