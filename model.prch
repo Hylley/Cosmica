@@ -28,8 +28,8 @@
 ]]
 
 -- O texto de boas vindas vai aqui:
-fita boas_vindas! = "Boas Vindas à PRCH!"
+fita _1boas_vindas = "Boas Vindas à PRCH!"
 
 -- Mude o valor dessa variável para acessar partes diferentes
--- da documentação! (0 a ?)
-int página = 0
+-- da documentação! (0 - ?)
+int págin!a = 0

@@ -17,6 +17,7 @@ std::regex ifCase[3] =
 	std::regex ("(\t*)entretanto:") 	// ELSE
 };
 std::regex variableAssign("(\t*)(.*)([ ]*)=([ ]*)(.*)");
+std::regex validVariableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
 
 void Parse(std::string& line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented)
 {
@@ -89,6 +90,10 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 				ThrowException(ValueError, fileName, lineNumber, "\"" + variableValue + "\" não é um tipo de dado válido");
 		}
 
+		if(isdigit(variableName[0]))
+			ThrowException(SyntaxError, fileName, lineNumber, "Nomes de variável (\"" + variableName + "\") só podem começar com caracteres alfabéticos ou \"_\"");
+		if(!std::regex_match(variableName, validVariableName))
+			ThrowException(SyntaxError, fileName, lineNumber, "Nomes de variável (\"" + variableName + "\") só podem conter caracteres alfanuméricos ou \"_\"");
 		if (std::find(std::begin(reserved_keywords), std::end(reserved_keywords), variableName) != std::end(reserved_keywords))
 			ThrowException(SyntaxError, fileName, lineNumber, "\"" + variableName + "\" é uma palavra reservada");
 
