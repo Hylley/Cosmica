@@ -28,25 +28,28 @@ void Parse(std::string& line, BlockNode& parent, std::string& fileName, int line
 	std::smatch matches;
 	
 	// Handle comments
-	if(std::regex_match(line, matches, singleLineComment))
-		return;
-	if(std::regex_match(line, matches, multiLineComment[0]) && !isMultiCommented)
-	{
-		isMultiCommented = true;
-		return;
-	}
-	if(std::regex_match(line, matches, multiLineComment[1]) && isMultiCommented)
-	{
-		isMultiCommented = false;
-		return;
-		
-	}else if(std::regex_match(line, matches, multiLineComment[2]) && isMultiCommented)
-	{
-		isMultiCommented = false;
-	}
-
 	if(isMultiCommented)
+	{
+		if(std::regex_match(line, matches, multiLineComment[1]))
+		{
+			isMultiCommented = false;
+		}else if(std::regex_match(line, matches, multiLineComment[2]))
+		{
+			ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva.");
+		}
+
 		return;
+	}
+	else
+	{
+		if(std::regex_match(line, matches, singleLineComment))
+			return;
+		if(std::regex_match(line, matches, multiLineComment[0]))
+		{
+			isMultiCommented = true;
+			return;
+		}
+	}
 
 	if(std::regex_match(line, matches, variableAssign))
 	{
