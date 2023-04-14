@@ -7,15 +7,14 @@
 class BlockNode : public Node
 {
 	private:
-		std::vector<Node*> children;
-		std::unordered_map<std::string, Type> args;
 		std::unordered_map<std::string, BlockNode*> functions;
+	
+	protected:
+		std::vector<Node*> children;
 		std::unordered_map<std::string, LiteralNode*> symbolTable;
 
 	public:
 		virtual void Evaluate() override;
-
-		void addArg(std::string name, Type type);
 
 		void addChild(Node* newChild);
 		Node* getChild(unsigned int index);

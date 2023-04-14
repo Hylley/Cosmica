@@ -2,6 +2,7 @@
 
 // Regular expressions pre-compilation
 std::regex invisibles("^[ \t\n]*$");
+std::regex tabs("^(\t*[ ]*).*");
 std::regex singleLineComment("(\t*.*)[ ]*--[^\\[]+");			// Handle comments
 std::regex multiLineComment[3] =
 {
@@ -19,14 +20,14 @@ std::regex ifCase[3] =
 std::regex variableAssign("(\t*)(.*)[ ]*(=|<-)[ ]*(.*)");
 std::regex validVariableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
 
-void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented)
+void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented, std::unordered_map<unsigned int, BlockNode*>& tabtable)
 {
 	#if DEBUG_SHOW_LINES
 	std::cout << lineNumber << " " << line << std::endl;
 	#endif
 
 	std::smatch matches;
-	
+
 	// Handle comments
 	if(!isMultiCommented)
 	{
@@ -62,25 +63,55 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 			isMultiCommented = false;
 		}else if(std::regex_match(line, matches, multiLineComment[2]))
 		{
-			ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva.");
+			ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva");
 		}
 
 		return;
 	}
 
+	// Handle empty lines
 	if(std::regex_match(line, matches, invisibles))
 		return;
 
+	// Handle tabs
+	unsigned int tabLevel = 0;
+	if(std::regex_match(line, matches, tabs))
+	{
+		tabLevel = findTabLevel(matches[1], tabtable);
+	}
+	if(!tabtable.count(tabLevel))
+		ThrowException(SyntaxError, fileName, lineNumber, "Não exite nenhum bloco encapsulando o nível " + std::to_string(tabLevel) + " de identação");
+	for (const auto& pair : tabtable)
+	{
+		if(pair.first <= tabLevel)
+			continue;
+		
+		tabtable.erase(pair.first);
+	}
+
 	if(std::regex_match(line, matches, variableAssign))
 	{
-		implementVariableAssign(matches, parent, fileName, lineNumber);
+		implementVariableAssign(matches, tabtable[tabLevel], fileName, lineNumber);
 
 		return;
 	}
 
-	
-	
 	ThrowException(SyntaxError, fileName, lineNumber, "Impossível resolver: \"" + line + "\"");
 
 	return;
+}
+
+unsigned int findTabLevel(std::string tabs, std::unordered_map<unsigned int, BlockNode*>& tabtable)
+{
+	unsigned int tabLevel = 0;
+
+	for (char c : tabs)
+	{
+		if(c != '\t')
+			ThrowInternal("Identation only allowed with tabs!");
+		
+		tabLevel++;
+	}
+
+	return tabLevel;
 }

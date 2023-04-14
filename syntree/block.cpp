@@ -18,16 +18,6 @@ void BlockNode::Evaluate()
 
 // -------------------------------------
 
-void BlockNode::addArg(std::string name, Type type)
-{
-	args.insert({name, type});
-}
-
-// void BlockNode::removeArg(std::string name)	
-// {
-	
-// }
-
 void BlockNode::addChild(Node* newChild)
 {
 	children.push_back(newChild);

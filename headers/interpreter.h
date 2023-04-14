@@ -6,6 +6,6 @@
 #include "../syntree/headers/block.h"
 #include "../syntree/headers/variable_assign.h"
 
-void implementVariableAssign(std::smatch& matches, BlockNode& parent, std::string& fileName, int &lineNumber);
+void implementVariableAssign(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber);
 
 #endif

@@ -1,6 +1,6 @@
 #include "headers\interpreter.h"
 
-void implementVariableAssign(std::smatch& matches, BlockNode& parent, std::string& fileName, int &lineNumber)
+void implementVariableAssign(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber)
 {
 	std::string tabLevel = matches[1];
 	std::string assignOp = matches[3];
@@ -50,6 +50,7 @@ void implementVariableAssign(std::smatch& matches, BlockNode& parent, std::strin
 	if (std::find(std::begin(reserved_keywords), std::end(reserved_keywords), variableName) != std::end(reserved_keywords))
 		ThrowException(SyntaxError, fileName, lineNumber, "\"" + variableName + "\" é uma palavra reservada");
 
+	
 	// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
 	VariablAssign* node = new VariablAssign();
 	LiteralNode* literal = new LiteralNode();
@@ -60,5 +61,7 @@ void implementVariableAssign(std::smatch& matches, BlockNode& parent, std::strin
 	if(assignOp == "<-")
 		node->ignoreTypeCast = true;
 	
-	parent.addChild(node);
+	parent->addChild(node);
+
+	return;
 }
