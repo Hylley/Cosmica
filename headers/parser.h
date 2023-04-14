@@ -6,8 +6,8 @@
 #include "scanner.h"
 #include <regex>
 
-#include "../nodes/headers/block.h"
-#include "../nodes/headers/variable_assign.h"
+#include "../syntree/headers/block.h"
+#include "../syntree/headers/variable_assign.h"
 
 extern std::regex invisibles;
 extern std::regex singleLineComment;

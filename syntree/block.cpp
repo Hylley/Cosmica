@@ -69,7 +69,7 @@ void BlockNode::changeVariable(std::string variableName, LiteralNode* newValue, 
 {
 	if(!hasVariable(variableName))
 		ThrowInternal("You're trying to change a variable that doesn't exist u idiot (syntree.cpp, line 64)");
-	if(symbolTable[variableName]->type != newValue->type && !ignoreTypeCast)
+	if(symbolTable[variableName]->getType() != newValue->getType() && !ignoreTypeCast)
 		ThrowInternal('(' + newValue->value + ") does not share the same type as \"" + variableName + '\"');
 
 	LiteralNode* oldValue = symbolTable[variableName];

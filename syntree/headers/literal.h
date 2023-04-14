@@ -6,11 +6,16 @@
 
 class LiteralNode : public StaticNode
 {
-	public:
+	private:
 		Type type;
+	
+	public:
 		std::string value;
 
-		void setType(std::string newType);
+		Type getType();
+		void setType(Type newType);
+		std::string getTypeStr();
+		void setTypeStr(std::string newType);
 };
 
 #endif

@@ -1,1 +1,6 @@
+--[[
+	Eu sou um comentário
+]]
+
 variável = 2
+variável = 4

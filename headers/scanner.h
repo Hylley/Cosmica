@@ -5,7 +5,7 @@
 #include "debug.h"
 #include "parser.h"
 
-#include "../nodes/headers/block.h"
+#include "../syntree/headers/block.h"
 
 // std::unordered_map<std::string, std::any> dict;
 void Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);

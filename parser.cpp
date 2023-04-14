@@ -124,7 +124,7 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
 		VariablAssign* node = new VariablAssign();
 		LiteralNode* literal = new LiteralNode();
-		literal->setType(dataType);
+		literal->setTypeStr(dataType);
 		literal->value = variableValue;
 		node->name = variableName;
 		node->literal = literal;
