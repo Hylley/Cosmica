@@ -2,7 +2,6 @@
 #include "headers/debug.h"
 #include "headers/scanner.h"
 #include "headers/parser.h"
-#include "headers/interpreter.h"
 
 #include "nodes/headers/block.h"
 

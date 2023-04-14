@@ -65,17 +65,19 @@ LiteralNode* BlockNode::getVariable(std::string variableName)
 	return symbolTable[variableName];
 }
 
-void BlockNode::changeVariable(std::string variableName, LiteralNode* newValue)
+void BlockNode::changeVariable(std::string variableName, LiteralNode* newValue, bool ignoreTypeCast = false)
 {
 	if(!hasVariable(variableName))
 		ThrowInternal("You're trying to change a variable that doesn't exist u idiot (syntree.cpp, line 64)");
+	if(symbolTable[variableName]->type != newValue->type && !ignoreTypeCast)
+		ThrowInternal('(' + newValue->value + ") does not share the same type as \"" + variableName + '\"');
 
 	LiteralNode* oldValue = symbolTable[variableName];
 	symbolTable[variableName] = newValue;
 
 	#if DEBUG_SHOW_VARIABLES_CHANGES
-	std::cout << "{ " + variableName + ", " + oldValue->value + " } (deleted)" << std::endl;
-	std::cout << "{ " + variableName + ", " + newValue->value + " } (new)" << std::endl;
+	std::cout << "(-) { " + variableName + ", " + oldValue->value + " }" << std::endl;
+	std::cout << "(+) { " + variableName + ", " + newValue->value + " }" << std::endl;
 	#endif
 
 	delete oldValue;
@@ -86,6 +88,6 @@ void BlockNode::addVariable(std::string variableName, LiteralNode* newValue)
 	symbolTable[variableName] = newValue;
 
 	#if DEBUG_SHOW_VARIABLES_CHANGES
-	std::cout << "{ " + variableName + ", " + newValue->value + " }" << std::endl;
+	std::cout << "(+) { " + variableName + ", " + newValue->value + " }" << std::endl;
 	#endif
 }

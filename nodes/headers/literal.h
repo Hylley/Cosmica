@@ -9,7 +9,7 @@ class LiteralNode : public Node
 		Type type;
 		std::string value;
 
-		void SetType(std::string newType);
+		void setType(std::string newType);
 };
 
 #endif

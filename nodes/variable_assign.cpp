@@ -10,7 +10,7 @@ void VariablAssign::Evaluate()
 
 	if(block->hasVariable(name))
 	{
-		block->changeVariable(name, literal);
+		block->changeVariable(name, literal, ignoreTypeCast);
 		return;
 	}
 

@@ -9,6 +9,7 @@ class VariablAssign : public Node
 {
 	public:
 		std::string name;
+		bool ignoreTypeCast = false;
 		LiteralNode* literal;
 
 		virtual void Evaluate() override;

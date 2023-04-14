@@ -1,6 +1,6 @@
 #include "headers/literal.h"
 
-void LiteralNode::SetType(std::string newType)
+void LiteralNode::setType(std::string newType)
 {
 	if(newType == "bool") { type = Type::BOOL; return; }
 	if(newType == "int" ) { type = Type::INT; return;  }

@@ -16,7 +16,7 @@ std::regex ifCase[3] =
 	std::regex ("(\t*)entretanto, se (.*):"), 	// ELSE-IF
 	std::regex ("(\t*)entretanto:") 	// ELSE
 };
-std::regex variableAssign("(\t*)(.*)([ ]*)=([ ]*)(.*)");
+std::regex variableAssign("(\t*)(.*)[ ]*(=|<-)[ ]*(.*)");
 std::regex validVariableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
 
 void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented)
@@ -74,8 +74,9 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	if(std::regex_match(line, matches, variableAssign))
 	{
 		std::string tabLevel = matches[1];
+		std::string assignOp = matches[3];
 		std::string leftSide = matches[2];
-		std::string rightSize = matches[5];
+		std::string rightSize = matches[4];
 
 		if(rightSize.empty())
 			ThrowException(ValueError, fileName, lineNumber, "\"" + rightSize + "\" não é uma declaração válida");
@@ -123,10 +124,12 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
 		VariablAssign* node = new VariablAssign();
 		LiteralNode* literal = new LiteralNode();
-		literal->SetType(dataType);
+		literal->setType(dataType);
 		literal->value = variableValue;
 		node->name = variableName;
 		node->literal = literal;
+		if(assignOp == "<-")
+			node->ignoreTypeCast = true;
 		
 		parent.addChild(node);
 
