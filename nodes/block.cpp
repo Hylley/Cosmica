@@ -74,8 +74,8 @@ void BlockNode::changeVariable(std::string variableName, LiteralNode* newValue)
 	symbolTable[variableName] = newValue;
 
 	#if DEBUG_SHOW_VARIABLES_CHANGES
-	std::cout << "{ " + variableName + ',' + oldValue->value + " } (deleted)" << std::endl;
-	std::cout << "{ " + variableName + ',' + newValue->value + " } (new)" << std::endl;
+	std::cout << "{ " + variableName + ", " + oldValue->value + " } (deleted)" << std::endl;
+	std::cout << "{ " + variableName + ", " + newValue->value + " } (new)" << std::endl;
 	#endif
 
 	delete oldValue;

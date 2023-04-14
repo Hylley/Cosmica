@@ -120,13 +120,6 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		if (std::find(std::begin(reserved_keywords), std::end(reserved_keywords), variableName) != std::end(reserved_keywords))
 			ThrowException(SyntaxError, fileName, lineNumber, "\"" + variableName + "\" é uma palavra reservada");
 
-		#if DEBUG_DEVELOPER_FEEDBACK
-		std::cout << "VARIALE ASIGN" << std::endl;
-		std::cout << "Variable name: " << variableName << std::endl;
-		std::cout << "Data type: " << dataType << std::endl;
-		std::cout << "Variable value: " << variableValue << std::endl;
-		#endif
-
 		// DAANGER ZONE DANGER ZONE MEMORY LEAK ALLERT!!!!!
 		VariablAssign* node = new VariablAssign();
 		LiteralNode* literal = new LiteralNode();

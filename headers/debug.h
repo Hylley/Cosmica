@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-#define DEBUG_DEVELOPER_FEEDBACK false
+#define DEBUG_DEVELOPER_FEEDBACK true
 #define DEBUG_SHOW_LINES false
 #define DEBUG_SHOW_VARIABLES_CHANGES true
 

@@ -33,3 +33,4 @@ fita _1boas_vindas = "Boas Vindas à PRCH!"
 -- Mude o valor dessa variável para acessar partes diferentes
 -- da documentação! (0 - ?)
 int página = 2
+página = 4
