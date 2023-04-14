@@ -3,7 +3,8 @@
 #include "headers/scanner.h"
 #include "headers/parser.h"
 #include "headers/interpreter.h"
-#include "headers/syntree.h"
+
+#include "nodes/headers/block.h"
 
 std::string reserved_keywords[9] =
 {
@@ -61,7 +62,8 @@ int main(int argc, char	*argv[])
 	Lexer(content, mainNode, filePath); // Pass the raw file to the lexer, it will check for errors
 	// and automatically generate the AST into the given node.
 
-	Execute(mainNode);
+	// Start a chain reaction that execute the whole tree
+	mainNode.Evaluate();
 
 	Terminate(0);
 }

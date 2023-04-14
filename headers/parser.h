@@ -2,10 +2,11 @@
 #define PARSER_H
 
 #include "prch.h"
-#include "syntree.h"
 #include "debug.h"
 #include "scanner.h"
 #include <regex>
+
+#include "nodes/headers/block.h"
 
 extern std::regex invisibles;
 extern std::regex singleLineComment;

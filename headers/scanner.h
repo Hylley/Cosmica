@@ -2,7 +2,6 @@
 #define SCANNER_H
 
 #include "prch.h"
-#include "syntree.h"
 #include "debug.h"
 #include "parser.h"
 // #include <unordered_map>

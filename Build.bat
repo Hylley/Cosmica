@@ -1,8 +1,7 @@
-g++ prch.cpp^
+g++ main.cpp^
 	debug.cpp^
 	scanner.cpp^
 	parser.cpp^
-	interpreter.cpp^
-	syntree.cpp^
+	nodes\*.cpp^
 	-finput-charset=UTF-8^
 	-o prch.exe
