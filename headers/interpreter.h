@@ -7,5 +7,6 @@
 #include "../syntree/headers/variable_assign.h"
 
 void implementVariableAssign(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber);
+void implementIf(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber, std::unordered_map<unsigned int, BlockNode*>& tabtable, int tabLevel);
 
 #endif

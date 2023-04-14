@@ -11,11 +11,11 @@ std::regex multiLineComment[3] =
 	std::regex ("(.*)\\]\\](.*)")	// Incorrrect close comment
 };
 std::regex stringLiteral("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
-std::regex ifCase[3] =
+std::regex ifCases[3] =
 {
-	std::regex ("(\t*)se (.*):"), 	// IF
-	std::regex ("(\t*)entretanto, se (.*):"), 	// ELSE-IF
-	std::regex ("(\t*)entretanto:") 	// ELSE
+	std::regex ("^(\t*)se (.*):$"), 	// IF
+	std::regex ("^(\t*)entretanto, se (.*):$"), 	// ELSE-IF
+	std::regex ("^(\t*)entretanto:$") 	// ELSE
 };
 std::regex variableAssign("(\t*)(.*)[ ]*(=|<-)[ ]*(.*)");
 std::regex validVariableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
@@ -81,6 +81,14 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	}
 	if(!tabtable.count(tabLevel))
 		ThrowException(SyntaxError, fileName, lineNumber, "Não exite nenhum bloco encapsulando o nível " + std::to_string(tabLevel) + " de identação");
+	
+	// Tab sensitivity cases
+
+	// Else
+
+	// --------------
+	
+	// Un-elevate tab level 
 	for (const auto& pair : tabtable)
 	{
 		if(pair.first <= tabLevel)
@@ -92,6 +100,13 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	if(std::regex_match(line, matches, variableAssign))
 	{
 		implementVariableAssign(matches, tabtable[tabLevel], fileName, lineNumber);
+
+		return;
+	}
+
+	if(std::regex_match(line, matches, ifCases[0]))
+	{
+		implementIf(matches, tabtable[tabLevel], fileName, lineNumber, tabtable , tabLevel);
 
 		return;
 	}

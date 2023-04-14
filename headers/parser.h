@@ -14,7 +14,7 @@ extern std::regex tabs;
 extern std::regex singleLineComment;
 extern std::regex multiLineComment[3];
 extern std::regex stringLiteral;
-extern std::regex ifCase[3];
+extern std::regex ifCases[3];
 extern std::regex variableAssign;
 extern std::regex validVariableName;
 extern std::regex equalCompare;

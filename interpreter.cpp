@@ -65,3 +65,8 @@ void implementVariableAssign(std::smatch& matches, BlockNode* parent, std::strin
 
 	return;
 }
+
+void implementIf(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber, std::unordered_map<unsigned int, BlockNode*>& tabtable, int tabLevel)
+{
+	std::string condition = matches[2];
+}
