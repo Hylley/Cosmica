@@ -4,7 +4,7 @@
 #include "main.h"
 #include "debug.h"
 #include "scanner.h"
-#include <regex>
+#include "interpreter.h"
 
 #include "../syntree/headers/block.h"
 #include "../syntree/headers/variable_assign.h"
@@ -19,6 +19,5 @@ extern std::regex validVariableName;
 extern std::regex equalCompare;
 
 void Parse(std::string line, BlockNode&	parent, std::string& fileName, int lineNumber, bool& isMultiCommented);
-bool isAlphanumeric(std::string str);
 
 #endif

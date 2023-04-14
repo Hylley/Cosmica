@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <regex>
 #include <windows.h>
 #include <signal.h>
 
