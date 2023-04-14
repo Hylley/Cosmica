@@ -14,8 +14,7 @@ std::string reserved_keywords[9] =
 	"fita",
 	"se",
 	"entretanto",
-	"entretanto,",
-	"entretanto, "
+	"entretanto,"
 };
 
 void sigint_handler(int sig)
