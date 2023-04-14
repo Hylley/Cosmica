@@ -2,46 +2,23 @@
 
 void Execute(BlockNode& parent)
 {
-	unsigned int children = parent.children.size();
+	unsigned int children = parent.childrenCount();
 
 	for(unsigned int i = 0; i < children; i++)
 	{
-		VariablAssign* child = dynamic_cast<VariablAssign*>(parent.children[i]);
+		VariablAssign* child = dynamic_cast<VariablAssign*>(parent.getChild(i));
 		if(child != nullptr)
 		{
-			if(parent.hasVariableInPool(child->name))
+			if(parent.hasVariable(child->name))
 			{
-				parent.changeVariableInPool(child->name, child->literal);
+				parent.changeVariable(child->name, child->literal);
 			}
 			else
 			{
-				parent.addVariableInPool(child->name, child->literal);
+				parent.addVariable(child->name, child->literal);
 			}
 		}
 
 		delete child;
 	}
-
-	#if DEBUG_SHOW_GLOBAL_VARIABLES
-	std::cout << "{" << std::endl;
-	for (const auto& pair : parent.symbolTable) {
-		switch(pair.second->type)
-		{
-			case Type::BOOL:
-				std::cout << "\t(bool) ";
-				break;
-			case Type::INT:
-				std::cout << "\t(int) ";
-				break;
-			case Type::FLUT:
-				std::cout << "\t(flut) ";
-				break;
-			case Type::FITA:
-				std::cout << "\t(fita) ";
-				break;
-		}
-		std::cout << pair.first << ": " << pair.second->value << std::endl;
-	}
-	std::cout << "}" << std::endl;
-	#endif
 }

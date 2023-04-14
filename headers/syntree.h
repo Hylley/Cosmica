@@ -11,7 +11,15 @@ enum class Type { BOOL, INT, FLUT, FITA };
 
 class Node
 {
+	protected:
+		unsigned int nodeType = 0;
+
+		Node* parent;
+
 	public:
+		unsigned int getType();
+		void changeParent(Node* newParent);
+
 		virtual ~Node() {}
 };
 
@@ -33,19 +41,25 @@ class VariablAssign : public Node
 
 class BlockNode : public Node
 {
-	public:
-		std::string name;
+	private:
 		std::vector<Node*> children;
-		std::vector<Node*> functions;
+		std::unordered_map<std::string, Type> args;
+		std::unordered_map<std::string, BlockNode*> functions;
 		std::unordered_map<std::string, LiteralNode*> symbolTable;
 
-		bool hasVariableInPool(std::string variableName);
-		LiteralNode* getVariableInPool(std::string variableName);
-		void changeVariableInPool(std::string variableName, LiteralNode* newValue);
-		void addVariableInPool(std::string variableName, LiteralNode* newValue);
+	public:
+		void addArg(std::string name, Type type);
+		// void removeArg(std::string name);
 
-		BlockNode() : name("§"), children(std::vector<Node*>()), functions(std::vector<Node*>()) {}
+		void addChild(Node* newChild);
+		Node* getChild(unsigned int index);
+		void removeChild(unsigned int index, bool del);
+		unsigned int childrenCount();
 
+		bool hasVariable(std::string variableName);
+		LiteralNode* getVariable(std::string variableName);
+		void changeVariable(std::string variableName, LiteralNode* newValue);
+		void addVariable(std::string variableName, LiteralNode* newValue);
 };
 
 // Basic Operations
@@ -79,7 +93,7 @@ class FunctionCallNode : public Node
 {
 	public:
 		std::string name;
-		std::vector<Node*> args;
+		std::vector<LiteralNode*> variablePool;
 };
 
 #endif

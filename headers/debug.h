@@ -5,7 +5,7 @@
 
 #define DEBUG_DEVELOPER_FEEDBACK false
 #define DEBUG_SHOW_LINES false
-#define DEBUG_SHOW_GLOBAL_VARIABLES true
+#define DEBUG_SHOW_VARIABLES_CHANGES true
 
 #if DEBUG_DEVELOPER_FEEDBACK
 #include <chrono>
@@ -19,11 +19,12 @@ typedef	enum
 	ValueError,
 	TypeError,
 	ZeroDivisionError,
-	KeyboardInterrupt
+	KeyboardInterrupt,
+	InternalError
 } ExcepctionType;
 
 void ThrowException(ExcepctionType exception, std::string fileName, int line, std::string details);
 void ThrowInternal(std::string details);
-void Terminate();
+void Terminate(int execode);
 
 #endif

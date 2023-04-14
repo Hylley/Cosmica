@@ -29,8 +29,7 @@ void ThrowException(ExcepctionType exception, std::string fileName, int line, st
 
 	std::cerr << errorName << ": " << details << ";" << " na linha " << line << " em " << fileName << std::endl;
 
-	Terminate();
-	exit(1);
+	Terminate(1);
 }
 
 void ThrowInternal(std::string details)
@@ -38,7 +37,7 @@ void ThrowInternal(std::string details)
 	std::cerr << "InternalError: " << details << std::endl;
 }
 
-void Terminate()
+void Terminate(int execode = 0)
 {
 	#if DEBUG_DEVELOPER_FEEDBACK
 	auto end = std::chrono::high_resolution_clock::now();
@@ -46,5 +45,5 @@ void Terminate()
 	std::cout << "RUNTIME: " << duration.count() << " mls" << std::endl;
 	#endif
 
-	return;
+	exit(execode);
 }

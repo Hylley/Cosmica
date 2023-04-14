@@ -1,6 +1,6 @@
 -- Bem-vindo à Prch!
 --[[
-		"Prch" (leia-se pêrr-tchi) é uma linguagem de programação
+		"Kugelblitz" é uma linguagem de programação
 	interpretada de alto nível gradualmente tipada, com uma
 	sintaxe simples, familiar e estética à língua portuguesa.
 ]]
@@ -28,7 +28,7 @@
 ]]
 
 -- O texto de boas vindas vai aqui:
-fita _1boas_vindas = "Boas Vindas à PRCH!" -- Variável 1
+fita _1boas_vindas = "Boas Vindas à PRCH!"
 
 -- Mude o valor dessa variável para acessar partes diferentes
 -- da documentação! (0 - ?)
