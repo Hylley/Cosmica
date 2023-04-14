@@ -6,4 +6,4 @@ g++ main.cpp^
 	syntree\*.cpp^
 	-finput-charset=UTF-8^
 	-static^
-	-o cosmica.exe
+	-o prch.exe
