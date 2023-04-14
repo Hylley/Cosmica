@@ -1,4 +1,4 @@
-#include "headers/prch.h"
+#include "headers/main.h"
 #include "headers/debug.h"
 #include "headers/scanner.h"
 #include "headers/parser.h"

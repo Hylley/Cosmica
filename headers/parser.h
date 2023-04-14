@@ -1,12 +1,13 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "prch.h"
+#include "main.h"
 #include "debug.h"
 #include "scanner.h"
 #include <regex>
 
-#include "nodes/headers/block.h"
+#include "../nodes/headers/block.h"
+#include "../nodes/headers/variable_assign.h"
 
 extern std::regex invisibles;
 extern std::regex singleLineComment;

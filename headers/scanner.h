@@ -1,10 +1,11 @@
 #ifndef SCANNER_H
 #define SCANNER_H
 
-#include "prch.h"
+#include "main.h"
 #include "debug.h"
 #include "parser.h"
-// #include <unordered_map>
+
+#include "../nodes/headers/block.h"
 
 // std::unordered_map<std::string, std::any> dict;
 void Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);

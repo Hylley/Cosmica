@@ -35,6 +35,7 @@ void ThrowException(ExcepctionType exception, std::string fileName, int line, st
 void ThrowInternal(std::string details)
 {
 	std::cerr << "InternalError: " << details << std::endl;
+	Terminate(1);
 }
 
 void Terminate(int execode = 0)

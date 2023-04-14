@@ -1,5 +1,23 @@
 #include "headers\block.h"
 
+// -------------------------------------
+
+void BlockNode::Evaluate() 
+{
+	unsigned int childrenCount = children.size();
+
+	for(unsigned int i = 0; i < childrenCount; i++)
+	{
+		Node* child = children[i];
+
+		child->Evaluate();
+
+		delete child;
+	}
+}
+
+// -------------------------------------
+
 void BlockNode::addArg(std::string name, Type type)
 {
 	args.insert({name, type});

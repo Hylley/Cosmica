@@ -13,8 +13,9 @@ class BlockNode : public Node
 		std::unordered_map<std::string, LiteralNode*> symbolTable;
 
 	public:
+		virtual void Evaluate() override;
+
 		void addArg(std::string name, Type type);
-		// void removeArg(std::string name);
 
 		void addChild(Node* newChild);
 		Node* getChild(unsigned int index);

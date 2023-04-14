@@ -1,7 +1,7 @@
 #ifndef	DEBUG_H
 #define	DEBUG_H
 
-#include "prch.h"
+#include "main.h"
 
 #define DEBUG_DEVELOPER_FEEDBACK false
 #define DEBUG_SHOW_LINES false

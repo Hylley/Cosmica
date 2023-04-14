@@ -1,7 +1,7 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-#include "prch.h"
+#include "main.h"
 #include "debug.h"
 
 void Execute(BlockNode& parent);
