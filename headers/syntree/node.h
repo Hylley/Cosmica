@@ -1,16 +1,19 @@
 #ifndef STATIC_NODE_H
 #define STATIC_NODE_H
 
-#include "node.h"
+#include <string>
+#include <unordered_map>
 #include "../../headers/debug.h"
 
-class StaticNode
+enum class Type { BOOL, INT, FLUT, FITA };
+
+class Node
 {
 	protected:
 		Node* parent;
-
+	
 	public:
-		virtual ~StaticNode() {}
+		virtual ~Node() {}
 		void changeParent(Node* newParent);
 };
 

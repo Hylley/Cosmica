@@ -4,3 +4,10 @@
 
 variável = 2
 variável = 4
+
+se saskaosk:
+	variável = 5
+
+	outra_variável = 'aaAA'
+
+variável <- '10'

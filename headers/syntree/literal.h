@@ -2,9 +2,8 @@
 #define LITERAL_NODE_H
 
 #include "node.h"
-#include "static_node.h"
 
-class LiteralNode : public StaticNode
+class LiteralNode : public Node
 {
 	private:
 		Type type;

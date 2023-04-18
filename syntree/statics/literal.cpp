@@ -1,4 +1,4 @@
-#include "headers/literal.h"
+#include "..\..\headers\syntree\literal.h"
 
 Type LiteralNode::getType()
 {

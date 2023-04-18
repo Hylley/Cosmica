@@ -3,10 +3,10 @@
 
 #include "main.h"
 #include "parser.h"
-#include "../syntree/headers/block.h"
-#include "../syntree/headers/variable_assign.h"
+#include "syntree/block.h"
+#include "syntree/if.h"
 
-void implementVariableAssign(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber);
+Node* generateOp(std::smatch& matches, std::string& fileName, int &lineNumber);
 void implementIf(std::smatch& matches, BlockNode* parent, std::string& fileName, int &lineNumber, std::unordered_map<unsigned int, BlockNode*>& tabtable, int tabLevel);
 
 #endif

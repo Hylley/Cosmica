@@ -1,4 +1,4 @@
-#include "headers\block.h"
+#include "..\..\headers\syntree\block.h"
 
 // -------------------------------------
 
@@ -8,8 +8,7 @@ void BlockNode::Evaluate()
 
 	for(unsigned int i = 0; i < childrenCount; i++)
 	{
-		Node* child = children[i];
-
+		EvaluationNode* child = dynamic_cast<EvaluationNode*>(children[i]);
 		child->Evaluate();
 
 		delete child;
@@ -17,33 +16,6 @@ void BlockNode::Evaluate()
 }
 
 // -------------------------------------
-
-void BlockNode::addChild(Node* newChild)
-{
-	children.push_back(newChild);
-	newChild->changeParent(this);
-}
-
-Node* BlockNode::getChild(unsigned int index)
-{
-	return children[index];
-}
-
-void BlockNode::removeChild(unsigned int index, bool del = false)
-{
-	if(del)
-	{
-		Node* child = children[index];
-		delete child;
-	}
-
-	children.erase(children.begin() + index);
-}
-
-unsigned int BlockNode::childrenCount()
-{
-	return children.size();
-}
 
 bool BlockNode::hasVariable(std::string variableName)
 {

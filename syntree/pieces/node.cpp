@@ -1,9 +1,4 @@
-#include "headers\node.h"
-
-void Node::Evaluate()
-{
-	return;
-}
+#include "..\..\headers\syntree\node.h"
 
 void Node::changeParent(Node* newParent)
 {

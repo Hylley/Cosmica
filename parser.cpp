@@ -11,14 +11,14 @@ std::regex multiLineComment[3] =
 	std::regex ("(.*)\\]\\](.*)")	// Incorrrect close comment
 };
 std::regex stringLiteral("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
+std::regex opertational("^(\t*)([^\\s]*)[ ]+([^\\s]*)[ ]+([^\\s]*)[ ]+$");
 std::regex ifCases[3] =
 {
 	std::regex ("^(\t*)se (.*):$"), 	// IF
 	std::regex ("^(\t*)entretanto, se (.*):$"), 	// ELSE-IF
-	std::regex ("^(\t*)entretanto:$") 	// ELSE
+	std::regex ("^(\t*)senão:$") 	// ELSE
 };
-std::regex variableAssign("(\t*)(.*)[ ]*(=|<-)[ ]*(.*)");
-std::regex validVariableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
+std::regex variableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
 
 void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented, std::unordered_map<unsigned int, BlockNode*>& tabtable)
 {
@@ -89,7 +89,7 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	// --------------
 	
 	// Un-elevate tab level 
-	for (const auto& pair : tabtable)
+	for(const auto& pair : tabtable)
 	{
 		if(pair.first <= tabLevel)
 			continue;
@@ -97,19 +97,24 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		tabtable.erase(pair.first);
 	}
 
-	if(std::regex_match(line, matches, variableAssign))
+	if(std::regex_match(line, matches, opertational))
 	{
-		implementVariableAssign(matches, tabtable[tabLevel], fileName, lineNumber);
-
-		return;
+		tabtable[tabLevel]->addChild(generateOp(matches, fileName, lineNumber));
 	}
 
-	if(std::regex_match(line, matches, ifCases[0]))
-	{
-		implementIf(matches, tabtable[tabLevel], fileName, lineNumber, tabtable , tabLevel);
+	// if(std::regex_match(line, matches, variableAssign))
+	// {
+	// 	implementVariableAssign(matches, tabtable[tabLevel], fileName, lineNumber);
 
-		return;
-	}
+	// 	return;
+	// }
+
+	// if(std::regex_match(line, matches, ifCases[0]))
+	// {
+	// 	implementIf(matches, tabtable[tabLevel], fileName, lineNumber, tabtable , tabLevel);
+
+	// 	return;
+	// }
 
 	ThrowException(SyntaxError, fileName, lineNumber, "Impossível resolver: \"" + line + "\"");
 

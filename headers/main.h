@@ -1,5 +1,5 @@
-#ifndef PRCH_H
-#define PRCH_H
+#ifndef COSMICA_H
+#define COSMICA_H
 
 #include <iostream>
 #include <sstream>

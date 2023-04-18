@@ -3,7 +3,7 @@
 #include "headers/scanner.h"
 #include "headers/parser.h"
 
-#include "syntree/headers/block.h"
+#include "headers/syntree/block.h"
 
 std::string reserved_keywords[9] =
 {
