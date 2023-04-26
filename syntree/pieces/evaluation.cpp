@@ -9,7 +9,7 @@ EvaluationNode::~EvaluationNode()
 {
 	unsigned int size = childrenCount();
 
-	for(unsigned int i = 0; i < size; i++)
+	for(unsigned int i = size - 1; i >= 0; i--)
 	{
 		removeChild(i, true);
 	}

@@ -7,8 +7,7 @@ std::regex singleLineComment("(\t*.*)[ ]*--[^\\[]+");			// Handle comments
 std::regex multiLineComment[3] =
 {
 	std::regex ("(\t*.*)[ ]*--\\[\\[(.*)"), // Open comment
-	std::regex ("(.*)\\]\\]"),	// Correct close comment
-	std::regex ("(.*)\\]\\](.*)")	// Incorrrect close comment
+	std::regex ("(.*)\\]\\]$")	// Close comment
 };
 std::regex stringLiteral("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
 std::regex opertational("^(\t*)([^\\s]*)[ ]+([^\\s]*)[ ]+([^\\s]*)[ ]+$");
@@ -32,15 +31,15 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	if(!isMultiCommented)
 	{
 		/*
-				The single and multiple-lines regexes follow the same order:
+			The single and multiple-lines regexes follow the same order:
 
-					Index 0 -> Full text;
+				Index 0 -> Full text;
 
-					Index 2 -> All chars after the opening sequence ("--" or "--[[")
-					(not including the sequence itsel);
+				Index 2 -> All chars after the opening sequence ("--" or "--[[")
+				(not including the sequence itsel);
 
-					Index 1 -> All chars between the beginning and the opening
-					sequence (including tabs).
+				Index 1 -> All chars between the beginning and the opening
+				sequence (including tabs).
 
 				What we need to do is basically reassing the line with the index 1 content,
 			essencialy ignoring the comment part. Even if the content is empty, will be catch
@@ -61,9 +60,9 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		if(std::regex_match(line, matches, multiLineComment[1]))
 		{
 			isMultiCommented = false;
-		}else if(std::regex_match(line, matches, multiLineComment[2]))
-		{
-			ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva");
+		// }else if(std::regex_match(line, matches, multiLineComment[2]))
+		// {
+		// 	ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva");
 		}
 
 		return;
@@ -101,13 +100,6 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	{
 		tabtable[tabLevel]->addChild(generateOp(matches, fileName, lineNumber));
 	}
-
-	// if(std::regex_match(line, matches, variableAssign))
-	// {
-	// 	implementVariableAssign(matches, tabtable[tabLevel], fileName, lineNumber);
-
-	// 	return;
-	// }
 
 	// if(std::regex_match(line, matches, ifCases[0]))
 	// {

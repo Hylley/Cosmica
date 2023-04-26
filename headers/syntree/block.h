@@ -13,7 +13,7 @@ class BlockNode : public EvaluationNode
 		std::unordered_map<std::string, LiteralNode*> symbolTable;
 
 	public:
-		virtual void Evaluate() override;
+		void Evaluate() override;
 
 		bool hasVariable(std::string variableName);
 		LiteralNode* getVariable(std::string variableName);

@@ -8,8 +8,9 @@ void BlockNode::Evaluate()
 
 	for(unsigned int i = 0; i < childrenCount; i++)
 	{
-		EvaluationNode* child = dynamic_cast<EvaluationNode*>(children[i]);
-		child->Evaluate();
+		Node* child = children[i];
+		if(EvaluationNode* evalChild = dynamic_cast<EvaluationNode*>(child))
+			evalChild->Evaluate();
 
 		delete child;
 	}
