@@ -13,29 +13,24 @@ Operator::~Operator()
 
 // --------------------------------- / Implementation
 
-template <typename T>
-LiteralNode<T>* ArithmeticOperator<T>::result()
+LiteralNode* ArithmeticOperator::result()
 {
-	T result;
-
-	switch(op)
+	LiteralNode* literal = new LiteralNode();
+	literal->type = Type::INT;
+	if(operands[0]->type == Type::FLUT || operands[1]->type == Type::FLUT)
 	{
-		case '+':
-			result = operands[0]->value + operands[1]->value;
-			break;
-		case '-':
-			result = operands[0]->value - operands[1]->value;
-			break;
-		case '*':
-			result = operands[0]->value * operands[1]->value;
-			break;
-		case '/':
-			result = operands[0]->value / operands[1]->value;
-			break;
+		literal->type = Type::FLUT;
 	}
 
-	LiteralNode<T>* literal = new LiteralNode<T>();
-	literal->value = result;
+	switch(literal->type)
+	{
+		case Type::INT:
+			literal->value = std::to_string(operands[0]->toInt() + operands[0]->toInt());
+			break;
+		case Type::FLUT:
+			literal->value = std::to_string(operands[0]->toFloat() + operands[0]->toFloat());
+			break;
+	}
 
 	return literal;
 }

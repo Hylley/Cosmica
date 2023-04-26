@@ -5,14 +5,19 @@
 #include <cctype>
 #include <typeinfo>
 
-template <typename T>
 class LiteralNode : public Node
 {
 	public:
+		std::string value;
+		Type type;
 		bool isAttachedToVariable = false;
-		T value;
 
 		Type getType();
+
+		std::string toString();
+		int toInt();
+		float toFloat();
+		bool toBool();
 };
 
 #endif

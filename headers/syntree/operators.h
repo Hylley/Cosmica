@@ -7,19 +7,18 @@
 class Operator : Node
 {
 	public:
-		std::vector<LiteralNode<void*>*> operands;
+		LiteralNode* operands[2];
 
-		std::string op;
+		char op;
 
-		virtual LiteralNode<void*>* result() {};
+		virtual LiteralNode* result() {};
 		virtual ~Operator();
 };
 
-template <typename T>
 class ArithmeticOperator : Operator
 {
 	public:
-		LiteralNode<T>* result() override;
+		LiteralNode* result() override;
 };
 
 class ComparisonOperator : Operator {};

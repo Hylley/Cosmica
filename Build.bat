@@ -3,7 +3,9 @@ g++ main.cpp^
 	scanner.cpp^
 	parser.cpp^
 	interpreter.cpp^
-	syntree\*.cpp^
+	syntree\blocks\*.cpp^
+	syntree\pieces\*.cpp^
+	syntree\statics\*.cpp^
 	-finput-charset=UTF-8^
 	-static^
 	-o cosmica.exe
