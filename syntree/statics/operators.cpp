@@ -2,37 +2,40 @@
 
 Operator::~Operator()
 {
-	unsigned int operandsCount = operands.size();
-
-	for(unsigned int i = operandsCount - 1; i >= 0; i--)
+	for(unsigned int i = 1; i >= 0; i--)
 	{
 		if(operands[i]->isAttachedToVariable)
 			continue;
 		
-		LiteralNode* literal = operands[i];
-		operands.erase(operands.begin() + i);
-		delete literal;
-
-		if(operands.empty())
-        	break;
+		delete operands[i];
 	}
 }
 
 // --------------------------------- / Implementation
 
-LiteralNode* ArithmeticOperator::result()
+template <typename T>
+LiteralNode<T>* ArithmeticOperator<T>::result()
 {
-	std::string result;
-	Type operationType = Type::INT;
+	T result;
 
-	for(LiteralNode* operand : operands)
+	switch(op)
 	{
-		if(operand->type == Type::FITA)
-			ThrowInternal("Impossible to do math with FITA");
-		if(operand->type == Type::FLUT)
-			operationType = Type::FLUT;
+		case '+':
+			result = operands[0]->value + operands[1]->value;
+			break;
+		case '-':
+			result = operands[0]->value - operands[1]->value;
+			break;
+		case '*':
+			result = operands[0]->value * operands[1]->value;
+			break;
+		case '/':
+			result = operands[0]->value / operands[1]->value;
+			break;
 	}
 
+	LiteralNode<T>* literal = new LiteralNode<T>();
+	literal->value = result;
 
-
+	return literal;
 }

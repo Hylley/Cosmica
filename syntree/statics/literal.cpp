@@ -1,70 +1,86 @@
 #include "..\..\headers\syntree\literal.h"
 
-Type LiteralNode::getType()
+Type LiteralNode<int>::getType()
 {
-	return type;
+	return Type::INT;
 }
 
-void LiteralNode::setType(Type newType)
+Type LiteralNode<std::string>::getType()
 {
-	type = newType;
+	return Type::FITA;
 }
 
-std::string LiteralNode::getTypeStr()
+Type LiteralNode<float>::getType()
 {
-	if(type == Type::BOOL) { return "bool"; }
-	if(type == Type::INT ) { return "int";  }
-	if(type == Type::FLUT) { return "flut"; }
-	if(type == Type::FITA) { return "fita"; }
-
-	ThrowInternal("Wtf happened here? (literal.cpp, line 20)");
+	return Type::FLUT;
 }
 
-void LiteralNode::setTypeStr(std::string newType)
+Type LiteralNode<bool>::getType()
 {
-	if(newType == "bool") { type = Type::BOOL; return; }
-	if(newType == "int" ) { type = Type::INT; return;  }
-	if(newType == "flut") { type = Type::FLUT; return; }
-	if(newType == "fita") { type = Type::FITA; return; }
-
-	ThrowInternal("No valid type provided at variable asign (syntree.cpp, line 92)");
+	return Type::BOOL;
 }
+
+
+// void LiteralNode::setType(Type newType)
+// {
+// 	type = newType;
+// }
+
+// std::string LiteralNode::getTypeStr()
+// {
+// 	if(type == Type::BOOL) { return "bool"; }
+// 	if(type == Type::INT ) { return "int";  }
+// 	if(type == Type::FLUT) { return "flut"; }
+// 	if(type == Type::FITA) { return "fita"; }
+
+// 	ThrowInternal("Wtf happened here? (literal.cpp, line 20)");
+// }
+
+// void LiteralNode::setTypeStr(std::string newType)
+// {
+// 	if(newType == "bool") { type = Type::BOOL; return; }
+// 	if(newType == "int" ) { type = Type::INT; return;  }
+// 	if(newType == "flut") { type = Type::FLUT; return; }
+// 	if(newType == "fita") { type = Type::FITA; return; }
+
+// 	ThrowInternal("No valid type provided at variable asign (syntree.cpp, line 92)");
+// }
 
 // -----------------------------------/ Convertions
 
-std::string LiteralNode::toString()
-{
-	return value;
-}
+// std::string LiteralNode::toString()
+// {
+// 	return value;
+// }
 
-int LiteralNode::toInt()
-{
-	if(type == Type::BOOL)
-		return toBool();
+// int LiteralNode::toInt()
+// {
+// 	if(type == Type::BOOL)
+// 		return toBool();
 
-	if(!isdigit(value[0]))
-		return 0;
+// 	if(!isdigit(value[0]))
+// 		return 0;
 
-	return std::stoi(value);
-}
+// 	return std::stoi(value);
+// }
 
-float LiteralNode::toFloat()
-{
-	if(!isdigit(value[0]))
-		return 0.0f;
+// float LiteralNode::toFloat()
+// {
+// 	if(!isdigit(value[0]))
+// 		return 0.0f;
 
-	return std::stof(value);	
-}
+// 	return std::stof(value);	
+// }
 
-bool LiteralNode::toBool()
-{
-	if(type == Type::BOOL)
-	{
-		if(value == "falso" || value == "false" || value == "não")
-			return false;
-		if(value == "verdadeiro" || value == "true" || value == "sim")
-			return true;
-	}
+// bool LiteralNode::toBool()
+// {
+// 	if(type == Type::BOOL)
+// 	{
+// 		if(value == "falso" || value == "false" || value == "não")
+// 			return false;
+// 		if(value == "verdadeiro" || value == "true" || value == "sim")
+// 			return true;
+// 	}
 
-	return !toString().empty() || toInt() || toFloat();
-}
+// 	return !toString().empty() || toInt() || toFloat();
+// }
