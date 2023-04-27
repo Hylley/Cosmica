@@ -4,8 +4,12 @@
 #include "main.h"
 
 #define DEBUG_DEVELOPER_FEEDBACK true
-#define DEBUG_SHOW_LINES false
-#define DEBUG_SHOW_VARIABLES_CHANGES true
+
+#if DEBUG_DEVELOPER_FEEDBACK
+	#define DEBUG_SHOW_LINES false
+	#define DEBUG_SHOW_VARIABLES_CHANGES true
+	#define DEBUG_SHOW_MATH_EXPRESSION_EVAL true
+#endif
 
 #if DEBUG_DEVELOPER_FEEDBACK
 #include <chrono>

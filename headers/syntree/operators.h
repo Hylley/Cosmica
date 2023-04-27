@@ -4,10 +4,11 @@
 #include "node.h"
 #include "literal.h"
 
-class Operator : Node
+class Operator : public Node
 {
 	public:
-		LiteralNode* operands[2];
+		Node* left;
+		Node* right;
 
 		char op;
 
@@ -15,14 +16,14 @@ class Operator : Node
 		virtual ~Operator();
 };
 
-class ArithmeticOperator : Operator
+class ArithmeticOperator : public Operator
 {
 	public:
 		LiteralNode* result() override;
 };
 
-class ComparisonOperator : Operator {};
-class LogicalOperator    : Operator {};
-class AssignmentOperator : Operator {};
+class ComparisonOperator : public Operator {};
+class LogicalOperator    : public Operator {};
+class AssignmentOperator : public Operator {};
 
 #endif

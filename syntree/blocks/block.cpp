@@ -20,12 +20,37 @@ void BlockNode::Evaluate()
 
 bool BlockNode::hasVariable(std::string variableName)
 {
-	return symbolTable.count(variableName);
+	if(symbolTable.count(variableName))
+	{
+		return symbolTable.count(variableName);
+	}
+	else if(parent != nullptr)
+	{
+		if(BlockNode* parentBlock = dynamic_cast<BlockNode*>(parent))
+		{
+			return parentBlock->hasVariable(variableName);
+		}
+	}
+
+	return false;
+
 }
 
 LiteralNode* BlockNode::getVariable(std::string variableName)
 {
-	return symbolTable[variableName];
+	if(symbolTable.count(variableName))
+	{
+		return symbolTable[variableName];
+	}
+	else if(parent != nullptr)
+	{
+		if(BlockNode* parentBlock = dynamic_cast<BlockNode*>(parent))
+		{
+			return parentBlock->symbolTable[variableName];
+		}
+	}
+
+	return nullptr;
 }
 
 void BlockNode::changeVariable(std::string variableName, LiteralNode* newValue, bool ignoreTypeCast = false)

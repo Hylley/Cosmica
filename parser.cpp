@@ -1,16 +1,17 @@
 #include "headers/parser.h"
 
 // Regular expressions pre-compilation
+
+// Syntax
 std::regex invisibles("^[ \t\n]*$");
 std::regex tabs("^(\t*[ ]*).*");
 std::regex singleLineComment("(\t*.*)[ ]*--[^\\[]+");			// Handle comments
 std::regex multiLineComment[3] =
 {
 	std::regex ("(\t*.*)[ ]*--\\[\\[(.*)"), // Open comment
-	std::regex ("(.*)\\]\\]$")	// Close comment
+	std::regex ("(.*)\\]\\]$"),	// Close comment
+	std::regex ("(.*)\\]\\].*")	// Incorrect close comment
 };
-std::regex stringLiteral("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
-std::regex opertational("^(\t*)([^\\s]*)[ ]+([^\\s]*)[ ]+([^\\s]*)[ ]+$");
 std::regex ifCases[3] =
 {
 	std::regex ("^(\t*)se (.*):$"), 	// IF
@@ -18,6 +19,15 @@ std::regex ifCases[3] =
 	std::regex ("^(\t*)senão:$") 	// ELSE
 };
 std::regex variableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
+
+// Operations
+std::regex arithmeticOperator("^(\t*)(.*)[ ]+([+]|[-]|[*]|[/]|[%])[ ]+(.*)[ ]*$");
+
+// Formats
+std::regex inteiro("^[0-9]+$");
+std::regex fita("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
+std::regex flutuante("^([0-9+]|[0-9]*[.][0-9]+)f?$");
+std::regex booleano("^verdadeiro|falso|sim|não$");
 
 void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented, std::unordered_map<unsigned int, BlockNode*>& tabtable)
 {
@@ -60,11 +70,10 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 		if(std::regex_match(line, matches, multiLineComment[1]))
 		{
 			isMultiCommented = false;
-		// }else if(std::regex_match(line, matches, multiLineComment[2]))
-		// {
-		// 	ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva");
+		}else if(std::regex_match(line, matches, multiLineComment[2]))
+		{
+			ThrowException(SyntaxError, fileName, lineNumber, "Fechamento de comentário precisa de linha exclusiva");
 		}
-
 		return;
 	}
 
@@ -81,24 +90,13 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 	if(!tabtable.count(tabLevel))
 		ThrowException(SyntaxError, fileName, lineNumber, "Não exite nenhum bloco encapsulando o nível " + std::to_string(tabLevel) + " de identação");
 	
-	// Tab sensitivity cases
 
-	// Else
-
-	// --------------
-	
-	// Un-elevate tab level 
-	for(const auto& pair : tabtable)
+	if(std::regex_match(line, matches, arithmeticOperator))
 	{
-		if(pair.first <= tabLevel)
-			continue;
-		
-		tabtable.erase(pair.first);
-	}
+		tabtable[tabLevel]->addChild(generateArithmeticOperator(line, tabtable[tabLevel], fileName, lineNumber));
 
-	if(std::regex_match(line, matches, opertational))
-	{
-		tabtable[tabLevel]->addChild(generateOp(matches, fileName, lineNumber));
+		unelevate(tabtable, tabLevel);
+		return;
 	}
 
 	// if(std::regex_match(line, matches, ifCases[0]))
@@ -107,6 +105,7 @@ void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineN
 
 	// 	return;
 	// }
+
 
 	ThrowException(SyntaxError, fileName, lineNumber, "Impossível resolver: \"" + line + "\"");
 
@@ -126,4 +125,15 @@ unsigned int findTabLevel(std::string tabs, std::unordered_map<unsigned int, Blo
 	}
 
 	return tabLevel;
+}
+
+void unelevate(std::unordered_map<unsigned int, BlockNode*>& tabtable, unsigned int tabLevel)
+{
+	for(const auto& pair : tabtable)
+	{
+		if(pair.first <= tabLevel)
+			continue;
+		
+		tabtable.erase(pair.first);
+	}
 }

@@ -25,7 +25,7 @@ std::vector<std::string> Tokenize(std::string &str, char delimiter)
 
 	// If there is a string
 	std::smatch matches;
-	if(std::regex_match(str, matches, stringLiteral))
+	if(std::regex_match(str, matches, fita))
 	{
 		str = matches[1];
 		sufix = matches[2];

@@ -3,6 +3,7 @@ g++ main.cpp^
 	scanner.cpp^
 	parser.cpp^
 	interpreter.cpp^
+	utils.cpp^
 	syntree\blocks\*.cpp^
 	syntree\pieces\*.cpp^
 	syntree\statics\*.cpp^

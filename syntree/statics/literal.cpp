@@ -14,6 +14,9 @@ std::string LiteralNode::toString()
 
 int LiteralNode::toInt()
 {
+	if(type == Type::FITA)
+		ThrowInternal("Cannot convert FITA to INT");
+
 	if(type == Type::BOOL)
 		return toBool();
 
@@ -25,6 +28,9 @@ int LiteralNode::toInt()
 
 float LiteralNode::toFloat()
 {
+	if(type == Type::FITA)
+		ThrowInternal("Cannot convert FITA to FLUT");
+
 	if(!isdigit(value[0]))
 		return 0.0f;
 
