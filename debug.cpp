@@ -43,7 +43,7 @@ void Terminate(int execode = 0)
 	#if SHOW_PROGRAM_RUN_TIME
 	auto end = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-	std::cout << "RUNTIME: " << duration.count() << " mls" << std::endl;
+	std::cout << "{runtime} duration: " << duration.count() << " mls" << std::endl;
 	#endif
 
 	exit(execode);

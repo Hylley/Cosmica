@@ -33,22 +33,25 @@ std::string calc(LiteralNode* leftOperand, LiteralNode* rightOperand, char op)
 	switch(op)
 	{
 		case '+':
-				return std::to_string(leftOperand->to<T>() + rightOperand->to<T>());
+			return std::to_string(leftOperand->to<T>() + rightOperand->to<T>());
 			break;
 		case '-':
-				return std::to_string(leftOperand->to<T>() - rightOperand->to<T>());
+			return std::to_string(leftOperand->to<T>() - rightOperand->to<T>());
 			break;
 		case '*':
-				return std::to_string(leftOperand->to<T>() * rightOperand->to<T>());
+			return std::to_string(leftOperand->to<T>() * rightOperand->to<T>());
 			break;
 		case '/':
-				return std::to_string(leftOperand->to<T>() / rightOperand->to<T>());
+			if(rightOperand->to<T>() == (T)0)
+				ThrowInternal("(ZeroDivisionError) Divisão por zero inválida");
+
+			return std::to_string(leftOperand->to<T>() / rightOperand->to<T>());
 			break;
 		case '%':
-				if(leftOperand->type != Type::FLUT || rightOperand->type != Type::FLUT)
-					ThrowInternal("Cannot perform modulus with FLUT");
-				
-				return std::to_string(leftOperand->to<int>() / rightOperand->to<int>());
+			if(leftOperand->type != Type::FLUT || rightOperand->type != Type::FLUT)
+				ThrowInternal("Cannot perform modulus with FLUT");
+			
+			return std::to_string(leftOperand->to<int>() / rightOperand->to<int>());
 			break;
 	}
 }

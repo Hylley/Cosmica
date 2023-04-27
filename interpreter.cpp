@@ -72,14 +72,14 @@ ArithmeticOperator* generateArithmeticOperator(std::string str, BlockNode* paren
 		ThrowException(SyntaxError, fileName, lineNumber, "Expressão não possui nenhum operador");
 	}
 	
-	lHalf = str.substr(0, lastPrecedenceOperatorIndex);
+	lHalf = trim(str.substr(0, lastPrecedenceOperatorIndex));
 	char op = str[lastPrecedenceOperatorIndex];
-	rHalf = str.substr(lastPrecedenceOperatorIndex+1, strLenght);
+	rHalf = trim(str.substr(lastPrecedenceOperatorIndex+1, strLenght));
 
 	#if DEBUG_SHOW_MATH_EXPRESSION_EVAL
-	std::cout << "Left half: " << lHalf << std::endl;
-	std::cout << "Operator: " << op << std::endl;
-	std::cout << "Right half: " << rHalf << std::endl;
+	std::cout << "{math} left half: " << lHalf << std::endl;
+	std::cout << "{math} operator: " << op << std::endl;
+	std::cout << "{math} right half: " << rHalf << std::endl;
 	#endif
 
 	root->op = op;
@@ -87,13 +87,13 @@ ArithmeticOperator* generateArithmeticOperator(std::string str, BlockNode* paren
 	if(lHalf.find_first_of("+-*/%^") != std::string::npos)
 	{
 		#if DEBUG_SHOW_MATH_EXPRESSION_EVAL
-		std::cout << "Re-tree: \"" << lHalf << "\" (" << lHalf.find_first_of("+-*/%^") << ")" << std::endl;
+		std::cout << "{expression} re-tree: \"" << lHalf << "\" (" << lHalf.find_first_of("+-*/%^") << ")" << std::endl;
 		#endif
 		root->left = generateArithmeticOperator(lHalf, parent, fileName, lineNumber);
 	}
 	else
 	{
-		LiteralNode* literal = getLiteral(trim(lHalf), parent);
+		LiteralNode* literal = getLiteral(lHalf, parent);
 		if(literal == nullptr)
 			ThrowException(SyntaxError, fileName, lineNumber, "Nome \"" + lHalf + "\" não existe nesse contexto");
 		root->left = literal;
@@ -102,13 +102,13 @@ ArithmeticOperator* generateArithmeticOperator(std::string str, BlockNode* paren
 	if(rHalf.find_first_of("+-*/%^") != std::string::npos)
 	{
 		#if DEBUG_SHOW_MATH_EXPRESSION_EVAL
-		std::cout << "Re-tree: \"" << rHalf << "\" (" << rHalf.find_first_of("+-*/%^") << ")" << std::endl;
+		std::cout << "{math} re-tree: \"" << rHalf << "\" (" << rHalf.find_first_of("+-*/%^") << ")" << std::endl;
 		#endif
 		root->right = generateArithmeticOperator(rHalf, parent, fileName, lineNumber);
 	}
 	else
 	{
-		LiteralNode* literal = getLiteral(trim(rHalf), parent);
+		LiteralNode* literal = getLiteral(rHalf, parent);
 		if(literal == nullptr)
 			ThrowException(SyntaxError, fileName, lineNumber, "Nome \"" + rHalf + "\" não existe nesse contexto");
 		root->right = literal;
@@ -116,7 +116,7 @@ ArithmeticOperator* generateArithmeticOperator(std::string str, BlockNode* paren
 
 	#if DEBUG_SHOW_MATH_EXPRESSION_EVAL
 	LiteralNode* result = root->result();
-	std::cout << "RESULT: \"" << result->value << "\"" << std::endl;
+	std::cout << "{math} result: \"" << result->value << "\"" << std::endl;
 	delete result;
 	#endif
 
