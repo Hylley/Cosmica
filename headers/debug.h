@@ -6,12 +6,13 @@
 #define DEBUG_DEVELOPER_FEEDBACK true
 
 #if DEBUG_DEVELOPER_FEEDBACK
+	#define SHOW_PROGRAM_RUN_TIME true
 	#define DEBUG_SHOW_LINES false
-	#define DEBUG_SHOW_VARIABLES_CHANGES true
-	#define DEBUG_SHOW_MATH_EXPRESSION_EVAL true
+	#define DEBUG_SHOW_VARIABLES_CHANGES false
+	#define DEBUG_SHOW_MATH_EXPRESSION_EVAL false
 #endif
 
-#if DEBUG_DEVELOPER_FEEDBACK
+#if SHOW_PROGRAM_RUN_TIME
 #include <chrono>
 extern std::chrono::high_resolution_clock::time_point start;
 #endif

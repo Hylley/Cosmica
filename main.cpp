@@ -27,7 +27,7 @@ void sigint_handler(int sig)
 
 int main(int argc, char	*argv[])
 {
-	#if DEBUG_DEVELOPER_FEEDBACK
+	#if SHOW_PROGRAM_RUN_TIME
 	std::cout << "INIT" << std::endl;
 	#endif
 

@@ -27,6 +27,32 @@ Operator::~Operator()
 
 // --------------------------------- / Implementation
 
+template <typename T>
+std::string calc(LiteralNode* leftOperand, LiteralNode* rightOperand, char op)
+{
+	switch(op)
+	{
+		case '+':
+				return std::to_string(leftOperand->to<T>() + rightOperand->to<T>());
+			break;
+		case '-':
+				return std::to_string(leftOperand->to<T>() - rightOperand->to<T>());
+			break;
+		case '*':
+				return std::to_string(leftOperand->to<T>() * rightOperand->to<T>());
+			break;
+		case '/':
+				return std::to_string(leftOperand->to<T>() / rightOperand->to<T>());
+			break;
+		case '%':
+				if(leftOperand->type != Type::FLUT || rightOperand->type != Type::FLUT)
+					ThrowInternal("Cannot perform modulus with FLUT");
+				
+				return std::to_string(leftOperand->to<int>() / rightOperand->to<int>());
+			break;
+	}
+}
+
 LiteralNode* ArithmeticOperator::result()
 {
 	LiteralNode* leftOperand = nullptr;
@@ -60,20 +86,15 @@ LiteralNode* ArithmeticOperator::result()
 	}
 
 	LiteralNode* literal = new LiteralNode();
-	literal->type = Type::INT;
+
 	if(leftOperand->type == Type::FLUT || rightOperand->type == Type::FLUT)
 	{
 		literal->type = Type::FLUT;
-	}
-
-	switch(literal->type)
+		literal->value = calc<float>(leftOperand, rightOperand, op);
+	}else
 	{
-		case Type::INT:
-			literal->value = std::to_string(leftOperand->toInt() + rightOperand->toInt());
-			break;
-		case Type::FLUT:
-			literal->value = std::to_string(rightOperand->toFloat() + rightOperand->toFloat());
-			break;
+		literal->type = Type::FLUT;
+		literal->value = calc<int>(leftOperand, rightOperand, op);
 	}
 
 	return literal;

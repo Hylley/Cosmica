@@ -7,18 +7,25 @@ Type LiteralNode::getType()
 
 // -----------------------------------/ Convertions
 
-std::string LiteralNode::toString()
+template <>
+std::string LiteralNode::to<std::string>()
 {
 	return value;
 }
 
-int LiteralNode::toInt()
+template <>
+int LiteralNode::to<int>()
 {
 	if(type == Type::FITA)
 		ThrowInternal("Cannot convert FITA to INT");
 
 	if(type == Type::BOOL)
-		return toBool();
+	{
+		if(value == "falso" || value == "false" || value == "não")
+			return 0;
+		if(value == "verdadeiro" || value == "true" || value == "sim")
+			return 1;
+	}
 
 	if(!isdigit(value[0]))
 		return 0;
@@ -26,7 +33,8 @@ int LiteralNode::toInt()
 	return std::stoi(value);
 }
 
-float LiteralNode::toFloat()
+template <>
+float LiteralNode::to<float>()
 {
 	if(type == Type::FITA)
 		ThrowInternal("Cannot convert FITA to FLUT");
@@ -37,7 +45,8 @@ float LiteralNode::toFloat()
 	return std::stof(value);	
 }
 
-bool LiteralNode::toBool()
+template <>
+bool LiteralNode::to<bool>()
 {
 	if(type == Type::BOOL)
 	{
@@ -47,5 +56,5 @@ bool LiteralNode::toBool()
 			return true;
 	}
 
-	return !toString().empty() || toInt() || toFloat();
+	return (bool)(!to<std::string>().empty() || to<int>() || to<float>());
 }

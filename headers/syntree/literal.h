@@ -14,10 +14,8 @@ class LiteralNode : public Node
 
 		Type getType();
 
-		std::string toString();
-		int toInt();
-		float toFloat();
-		bool toBool();
+		template <typename T>
+		T to();
 };
 
 #endif

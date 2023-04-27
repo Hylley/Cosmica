@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include "literal.h"
+#include <functional>
 
 class Operator : public Node
 {

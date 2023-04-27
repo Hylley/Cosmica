@@ -40,7 +40,7 @@ void ThrowInternal(std::string details)
 
 void Terminate(int execode = 0)
 {
-	#if DEBUG_DEVELOPER_FEEDBACK
+	#if SHOW_PROGRAM_RUN_TIME
 	auto end = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 	std::cout << "RUNTIME: " << duration.count() << " mls" << std::endl;
