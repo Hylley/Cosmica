@@ -1,6 +1,5 @@
-Para ler em português brasileiro [clique aqui](/README-PT_BR.md)
 # Cosmica
-Cosmica is a gradually-typed interpreted programming language with heavily Python-inspired syntax. Want a twist? The syntax is entirely in Brazilian Portuguese!
+Cosmica é uma linguagem de programação interpretada de digitação gradual com sintaxe fortemente inspirada em Python. A reviravolta? A sintaxe é inteiramente em português brasileiro!
 
 ```python
 --[[

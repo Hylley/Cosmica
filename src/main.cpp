@@ -20,8 +20,8 @@ std::string reserved_keywords[9] =
 void sigint_handler(int sig)
 {
 	std::cerr << "KeyboardInterrupt: " << "Interrupção manual (Ctrl + C) ";
-    signal(SIGINT, SIG_DFL);
-    GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
+	signal(SIGINT, SIG_DFL);
+	GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
 	Terminate(1);
 }
 
