@@ -1,7 +1,14 @@
+# If in Windows, load resources
+ifeq ($(OS),Windows_NT)
+	RES = windres
+	RES_FILE = rsc/resources.res
+else
+	RES_CMD = :
+	RES_FILE = :
+endif
+
 # Variables
 CXX = g++
-WINDRES = windres
-RES_FILE = rsc/resources.res
 SRC_DIR = src
 OBJS = $(wildcard $(SRC_DIR)/*.cpp) \
 	$(wildcard $(SRC_DIR)/syntree/blocks/*.cpp) \
@@ -16,7 +23,7 @@ cosmica.exe: $(OBJS) $(RES_FILE)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(RES_FILE): rsc/resources.rc
-	$(WINDRES) -O coff -i $< -o $@
+	$(RES_CMD) -O coff -i $< -o $@
 
 .PHONY: clean
 clean:

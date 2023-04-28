@@ -12,5 +12,7 @@
 
 
 extern std::string reserved_keywords[9];
+void sigint_handler(int sig);
+std::string openFile(std::string filePath);
 
 #endif

@@ -15,7 +15,7 @@ função iniciar():
 
 	se idade < 18:
 		print('Você é menor de idade!')
-	entretanto, se idade > 18:
+	porém, se idade > 18:
 		print('Você é maior de idade!')
 	senão:
 		print('Você tem 18 anos!')

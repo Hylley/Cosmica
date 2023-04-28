@@ -37,3 +37,6 @@
 # Images
 *.psd
 *.png 
+
+# VScode config folder
+.vscode

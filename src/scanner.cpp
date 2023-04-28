@@ -17,63 +17,19 @@ void Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
 	}
 }
 
-//Not only tokenize the string, but also trim irrelevant spaces in the surroundings
-std::vector<std::string> Tokenize(std::string &str, char delimiter)
-{
-	std::vector<std::string> out;
-	std::string sufix;
-
-	// If there is a string
-	std::smatch matches;
-	if(std::regex_match(str, matches, fita))
-	{
-		str = matches[1];
-		sufix = matches[2];
-		sufix.back() = '\'';
-		sufix = '\'' + sufix;
-	}
-
-	std::stringstream stringStream(str);
-	std::string	s;
-	
-	while (std::getline(stringStream, s, delimiter)) {	
-		out.push_back(s); 
-	}
-
-	if(!sufix.empty())
-		out.push_back(sufix);
-
-	return out;
-}
-
 std::string findDataType(std::string& value)
 {
-	if(value == "sim" || value == "não" || value == "verdadeiro" || value == "falso" || value == "crocodilo")
+	if(std::regex_match(value, booleano))
 		return "bool";
 		
-	if(std::regex_match(value, std::regex("^[0-9]+$")))
+	if(std::regex_match(value, inteiro))
 		return "int";
 	
-	if(std::regex_match(value, std::regex("(([0-9]+)?.[0-9]+f?)|([0-9]+f)")))
+	if(std::regex_match(value, flutuante))
 		return "flut";
 	
-	if(std::regex_match(value, std::regex("\'(.*)\n*(.*)\'")))
+	if(std::regex_match(value, fita))
 		return "fita";
 	
-	return "null";
-}
-
-bool isValidDataType(std::string& value)
-{
-	return value == "int" || value == "flut"|| value == "fita" || value == "bool";
-}
-
-bool isInt(std::string& value)
-{
-	return std::regex_match(value, std::regex("^[0-9]+$"));
-}
-
-bool isFloat(std::string& value)
-{
-	return std::regex_match(value, std::regex("(([0-9]+)?.[0-9]+f?)|([0-9]+f)"));
+	return nullptr;
 }

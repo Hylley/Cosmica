@@ -3,22 +3,23 @@ id ICON "icon.ico"
 FILEVERSION     0,1,0,0
 PRODUCTVERSION  0,1,0,0
 BEGIN
-  BLOCK "StringFileInfo"
-  BEGIN
-    BLOCK "041604E4"
-    BEGIN
-      VALUE "CompanyName", "Hylley"
-      VALUE "FileDescription", "Sou lindo"
-      VALUE "FileVersion", "0.1"
-      VALUE "InternalName", "cosmica"
-      VALUE "LegalCopyright", "Cosmica"
-      VALUE "OriginalFilename", "cosmica.exe"
-      VALUE "ProductName", "Cosmica"
-      VALUE "ProductVersion", "0.1"
-    END
-  END
-  BLOCK "VarFileInfo"
-  BEGIN
-    VALUE "Translation", 0x0416, 1252
-  END
+	BLOCK "StringFileInfo"
+	BEGIN
+		BLOCK "041604E4"
+		BEGIN
+			VALUE "CompanyName", "Hylley"
+			VALUE "FileDescription", "sou lindo"
+			VALUE "FileVersion", "0.1"
+			VALUE "InternalName", "cosmica"
+			VALUE "LegalCopyright", "Cosmica"
+			VALUE "OriginalFilename", "cosmica.exe"
+			VALUE "ProductName", "Cosmica"
+			VALUE "ProductVersion", "0.1"
+		END
+	END
+
+	BLOCK "VarFileInfo"
+	BEGIN
+		VALUE "Translation", 0x0416, 1252
+	END
 END
