@@ -4,6 +4,13 @@
 #include "node.h"
 #include <cctype>
 #include <typeinfo>
+#include <regex>
+
+enum class Type { BOOL, INT, FLUT, FITA, NULO };
+extern std::regex inteiro;
+extern std::regex fita;
+extern std::regex flutuante;
+extern std::regex booleano;
 
 class LiteralNode : public Node
 {
@@ -17,5 +24,7 @@ class LiteralNode : public Node
 		template <typename T>
 		T to();
 };
+
+Type findDataType(std::string& input);
 
 #endif

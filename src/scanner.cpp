@@ -16,20 +16,3 @@ void Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
 		Parse(line,	parent,	fileName, ++lineCount, isMultiCommented, tabtable);
 	}
 }
-
-std::string findDataType(std::string& value)
-{
-	if(std::regex_match(value, booleano))
-		return "bool";
-		
-	if(std::regex_match(value, inteiro))
-		return "int";
-	
-	if(std::regex_match(value, flutuante))
-		return "flut";
-	
-	if(std::regex_match(value, fita))
-		return "fita";
-	
-	return nullptr;
-}

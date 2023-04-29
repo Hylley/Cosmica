@@ -9,7 +9,6 @@
 
 // std::unordered_map<std::string, std::any> dict;
 void Lexer(std::string&	raw, BlockNode&	parent, std::string& fileName);
-std::string findDataType(std::string& input);
 
 
 #endif

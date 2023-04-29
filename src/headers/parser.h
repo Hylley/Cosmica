@@ -16,10 +16,6 @@ extern std::regex multiLineComment[3];
 extern std::regex ifCases[3];
 extern std::regex variableAssign;
 extern std::regex arithmeticOperator;
-extern std::regex inteiro;
-extern std::regex fita;
-extern std::regex flutuante;
-extern std::regex booleano;
 
 void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented, std::unordered_map<unsigned int, BlockNode*>& tabtable);
 unsigned int findTabLevel(std::string tabs, std::unordered_map<unsigned int, BlockNode*>& tabtable);

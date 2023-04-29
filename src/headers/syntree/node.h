@@ -5,8 +5,6 @@
 #include <unordered_map>
 #include "../../headers/debug.h"
 
-enum class Type { BOOL, INT, FLUT, FITA };
-
 class Node
 {
 	protected:

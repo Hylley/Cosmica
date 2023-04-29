@@ -23,12 +23,6 @@ std::regex variableName("^[a-zA-Z0-9_À-ÖØ-öø-ÿ]+$");
 // Operations
 std::regex arithmeticOperator("^(\t*)(.*)[ ]*([+]|[-]|[*]|[/]|[%])[ ]*(.*)[ ]*$");
 
-// Formats
-std::regex inteiro("^[0-9]+$");
-std::regex fita("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
-std::regex flutuante("^([0-9+]|[0-9]*[.][0-9]+)f?$");
-std::regex booleano("^verdadeiro|falso|sim|não$");
-
 void Parse(std::string line, BlockNode& parent, std::string& fileName, int lineNumber, bool& isMultiCommented, std::unordered_map<unsigned int, BlockNode*>& tabtable)
 {
 	#if DEBUG_SHOW_LINES

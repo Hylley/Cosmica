@@ -1,7 +1,7 @@
 # If in Windows, load resources
 ifeq ($(OS),Windows_NT)
-	RES = windres
-	RES_FILE = rsc/resources.res
+	RES_CMD = windres
+	RES_FILE = res/resources.res
 else
 	RES_CMD = :
 	RES_FILE = :
@@ -22,7 +22,7 @@ all: cosmica.exe
 cosmica.exe: $(OBJS) $(RES_FILE)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(RES_FILE): rsc/resources.rc
+$(RES_FILE): res/resources.rc
 	$(RES_CMD) -O coff -i $< -o $@
 
 .PHONY: clean

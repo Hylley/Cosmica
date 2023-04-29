@@ -1,8 +1,30 @@
 #include "..\..\headers\syntree\literal.h"
 
+std::regex inteiro("^[0-9]+$");
+std::regex fita("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
+std::regex flutuante("^([0-9+]|[0-9]*[.][0-9]+)f?$");
+std::regex booleano("^verdadeiro|falso|sim|não$");
+
 Type LiteralNode::getType()
 {
 	return type;
+}
+
+Type findDataType(std::string& value)
+{
+	if(std::regex_match(value, booleano))
+		return Type::BOOL;
+		
+	if(std::regex_match(value, inteiro))
+		return Type::INT;
+	
+	if(std::regex_match(value, flutuante))
+		return Type::FLUT;
+	
+	if(std::regex_match(value, fita))
+		return Type::FITA;
+	
+	return Type::NULO;
 }
 
 // -----------------------------------/ Convertions
