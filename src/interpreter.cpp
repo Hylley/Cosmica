@@ -4,38 +4,16 @@ LiteralNode* getLiteral(std::string value, BlockNode* parent)
 {
 	// First search if there is a variable
 	if(parent->hasVariable(value))
-	{
 		return parent->getVariable(value);
-	}
+
+	Type type = findDataType(value);
+	if(type == Type::NULO)
+		return nullptr;
 
 	LiteralNode* literal = new LiteralNode();
 	literal->value = value;
 	literal->isAttachedToVariable = false;
-
-	if(std::regex_match(value, inteiro))
-	{
-		literal->type = Type::INT;
-		return literal;
-	}
-	else if(std::regex_match(value, fita))
-	{
-		literal->type = Type::FITA;
-		return literal;
-	}
-	else if(std::regex_match(value, flutuante))
-	{
-		literal->type = Type::FLUT;
-		return literal;
-	}
-	else if(std::regex_match(value, booleano))
-	{
-		literal->type = Type::BOOL;
-		return literal;
-	}else
-	{
-		delete literal;
-		return nullptr;
-	}
+	literal->type = type;
 }
 
 ArithmeticOperator* generateArithmeticOperator(std::string str, BlockNode* parent, std::string& fileName, int &lineNumber)
