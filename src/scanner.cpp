@@ -2,7 +2,7 @@
 
 int spaces_equivalent_to_tab = 4;
 
-void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_commented, int& tab_level, std::string& filtered_line, std::string& file_name, int& line_number)
+void Scan(std::string& line, bool& is_multi_line_commented, int& tab_level, std::string& filtered_line, std::string& file_name, int& line_number)
 {
 	std::smatch matches;
 
@@ -19,7 +19,6 @@ void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_c
 		else if(std::regex_match(line, matches, singleLineComment))
 		{
 			line = matches[1];
-			is_single_line_comment = true;
 		}
 	}
 	else

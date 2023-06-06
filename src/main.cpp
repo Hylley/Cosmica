@@ -76,7 +76,6 @@ int main(int argc, char *argv[])
 	{
 		{0, &topNode}
 	};
-	bool is_single_line_commented = false;
 	bool is_multi_line_commented =	false;
 	int	line_count = 0;
 	#pragma endregion
@@ -95,15 +94,15 @@ int main(int argc, char *argv[])
 			The scanner function will filter the current line (remove comments,
 			remove tabs and etc).
 		*/
-		Scan(line, is_single_line_commented, is_multi_line_commented, tab_level, filtered_line, file_path, line_count);
+		Scan(line, is_multi_line_commented, tab_level, filtered_line, file_path, line_count);
 
-		if(is_single_line_commented || is_multi_line_commented)
-		{
-			if(is_single_line_commented)
-				is_single_line_commented = false;
+		// if(is_single_line_commented || is_multi_line_commented)
+		// {
+		// 	if(is_single_line_commented)
+		// 		is_single_line_commented = false;
 			
-			continue;
-		}
+		// 	continue;
+		// }
 		
 		/*
 			Parsing part ->
