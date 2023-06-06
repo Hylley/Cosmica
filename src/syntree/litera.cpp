@@ -1,11 +1,11 @@
-#include "..\..\headers\syntree\literal.h"
+#include "literal.hpp"
 
 std::regex inteiro("^[0-9]+$");
 std::regex fita("(.*)((\'(.*)\n*(.*)\')|(\"(.*)\n*(.*)\"))([ ]*)");
 std::regex flutuante("^([0-9+]|[0-9]*[.][0-9]+)f?$");
 std::regex booleano("^verdadeiro|falso|sim|não$");
 
-Type LiteralNode::getType()
+Type Literal::getType()
 {
 	return type;
 }
@@ -27,27 +27,17 @@ Type findDataType(std::string& value)
 	return Type::NULO;
 }
 
-// -----------------------------------/ Convertions
-
 template <>
-std::string LiteralNode::to<std::string>()
+std::string Literal::to<std::string>()
 {
 	return value;
 }
 
 template <>
-int LiteralNode::to<int>()
+int Literal::to<int>()
 {
 	if(type == Type::FITA)
-		ThrowInternal("Cannot convert FITA to INT");
-
-	if(type == Type::BOOL)
-	{
-		if(value == "falso" || value == "false" || value == "não")
-			return 0;
-		if(value == "verdadeiro" || value == "true" || value == "sim")
-			return 1;
-	}
+		ThrowException(ValueError, file, line, "Cannot convert FITA to INT");
 
 	if(!isdigit(value[0]))
 		return 0;
@@ -56,7 +46,7 @@ int LiteralNode::to<int>()
 }
 
 template <>
-float LiteralNode::to<float>()
+float Literal::to<float>()
 {
 	if(type == Type::FITA)
 		ThrowInternal("Cannot convert FITA to FLUT");
@@ -68,15 +58,7 @@ float LiteralNode::to<float>()
 }
 
 template <>
-bool LiteralNode::to<bool>()
+bool Literal::to<bool>()
 {
-	if(type == Type::BOOL)
-	{
-		if(value == "falso" || value == "false" || value == "não")
-			return false;
-		if(value == "verdadeiro" || value == "true" || value == "sim")
-			return true;
-	}
-
 	return (bool)(!to<std::string>().empty() || to<int>() || to<float>());
 }

@@ -1,18 +1,74 @@
-#include "headers/scanner.h"
+#include "scanner.hpp"
 
-void Lexer(std::string&	raw, BlockNode&	parent,	std::string& fileName)
+int spaces_equivalent_to_tab = 4;
+
+void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_commented, int& tab_level, std::string& filtered_line, std::string& file_name, int& line_number)
 {
-	std::istringstream fileStream(raw);
-	std::string	line;
-	bool isMultiCommented =	false;
-	int	lineCount =	0;
-	std::unordered_map<unsigned int, BlockNode*> tabtable =
+	std::smatch matches;
+
+	if(!is_multi_line_commented)
 	{
-		{0, &parent}
-	};
-	
-	while(std::getline(fileStream, line))
-	{
-		Parse(line,	parent,	fileName, ++lineCount, isMultiCommented, tabtable);
+		// If is an valid multi comment openning
+		if(std::regex_match(line, matches, multiLineComment[0]))
+		{
+			line = matches[1];
+			is_multi_line_commented = true;
+		}
+		// If is an valid single line comment openning
+		else if(std::regex_match(line, matches, singleLineComment))
+		{
+			line = matches[1];
+			is_single_line_comment = true;
+		}
 	}
+	else
+	{
+		if(std::regex_match(line, multiLineComment[2]))
+			ThrowException(SyntaxError, file_name, line_number, "Fechamento de comentário precisa de linha exclusiva");
+
+		if(std::regex_match(line, matches, multiLineComment[1]))
+		{
+			line = matches[1];
+			is_multi_line_commented = false;
+		}
+
+		if(is_multi_line_commented)
+			return;
+	}
+
+	if(line.empty() || std::regex_match(line, matches, invisibles))
+		return;
+
+	std::regex_match(line, matches, tabs);
+
+	std::string ident = matches[1];
+	int tabs = 0;
+	int spaces = 0;
+
+	for(int i = 0; i < ident.length(); i++)
+	{
+		if(ident[i] == '\t')
+		{
+			tabs++;
+			continue;
+		}
+
+		if(ident[i] == ' ')
+		{
+			if(spaces < spaces_equivalent_to_tab - 1)
+			{
+				spaces++;
+				continue;
+			}
+
+			spaces = 0;
+			tabs++;
+		}
+	}
+
+	if(spaces != 0)
+		ThrowException(SyntaxError, file_name, line_number, "Uso inconsistente de tabs e espaços");
+
+	tab_level = tabs;
+	filtered_line = matches[2];
 }
