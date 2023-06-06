@@ -1,6 +1,6 @@
 #include "parser.hpp"
 
-// Syntax
+#pragma region regex definition
 std::regex invisibles("^[ \t\n]*$");
 std::regex tabs("^(\t*[ ]*)(.*)");
 std::regex singleLineComment("(.*)--.*");
@@ -10,6 +10,7 @@ std::regex multiLineComment[3] =
 	std::regex (".*\\]\\]"), // Close comment
 	std::regex (".*\\]\\].+") // Incorrect comment
 };
+#pragma endregion
 
 
 Node* Parse(std::string& line, int tab_level, std::string& file_name, int& line_number)

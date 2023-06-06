@@ -6,6 +6,7 @@ void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_c
 {
 	std::smatch matches;
 
+	#pragma region handle comments
 	if(!is_multi_line_commented)
 	{
 		// If is an valid multi comment openning
@@ -38,9 +39,10 @@ void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_c
 
 	if(line.empty() || std::regex_match(line, matches, invisibles))
 		return;
+	#pragma endregion
 
+	#pragma region handle identation
 	std::regex_match(line, matches, tabs);
-
 	std::string ident = matches[1];
 	int tabs = 0;
 	int spaces = 0;
@@ -71,4 +73,5 @@ void Scan(std::string& line, bool& is_single_line_comment, bool& is_multi_line_c
 
 	tab_level = tabs;
 	filtered_line = matches[2];
+	#pragma endregion
 }

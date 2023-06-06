@@ -17,14 +17,15 @@ std::string reserved_keywords[9] =
 	"porém,"
 };
 
-/*
-	In Unix-like operating systems, including Linux, the SIGINT signal is
-	sent to a process when the user interrupts it using the keyboard combination
-	Ctrl+C. By default, this signal terminates the process. This function handle
-	this situation by, well, terminating the process. For more info, line 56.
-*/
 void sigint_handler(int sig)
 {
+	/*
+		In some Unix-like operating systems, including Linux, the SIGINT signal
+		is sent to a process when the user interrupts it using the keyboard
+		combination Ctrl+C. By default, this signal terminates the process. This
+		function handle this situation by, well, terminating the process. For
+		more info, check "startup" region.
+	*/
 	std::cerr << "KeyboardInterrupt: " << "Interrupção manual (Ctrl + C)" << std::endl;
 	signal(SIGINT, SIG_DFL);
 	GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0);
@@ -49,6 +50,7 @@ std::string open_file(std::string filePath)
 
 int main(int argc, char *argv[])
 {
+	#pragma region startup
 	if(argc	< 2)
 		ThrowInternal("Argumentos insuficientes.");
 
@@ -63,8 +65,9 @@ int main(int argc, char *argv[])
 
 	std::string file_path = argv[1];
 	std::string file_content = open_file(file_path);
+	#pragma endregion
 
-
+	#pragma region pre-execution
 	std::istringstream fileStream(file_content);
 	std::string	line;
 
@@ -76,7 +79,9 @@ int main(int argc, char *argv[])
 	bool is_single_line_commented = false;
 	bool is_multi_line_commented =	false;
 	int	line_count = 0;
+	#pragma endregion
 
+	#pragma region execution
 	while(std::getline(fileStream, line))
 	{
 		std::string filtered_line;
@@ -118,7 +123,7 @@ int main(int argc, char *argv[])
 		effect that executes the whole syntatic tree.
 	*/
 	topNode.Evaluate();
-
+	#pragma endregion
 
 	Terminate(0);
 }
