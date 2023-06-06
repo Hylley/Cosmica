@@ -1,22 +1,6 @@
 #include "main.hpp"
-#include "debug.hpp"
-#include "scanner.hpp"
-#include "parser.hpp"
 
-#include "syntree/block.hpp"
-
-std::string reserved_keywords[9] =
-{
-	":",
-	"bool",
-	"int",
-	"flut",
-	"fita",
-	"se",
-	"porém",
-	"porém,"
-};
-
+#pragma region frunctions
 void sigint_handler(int sig)
 {
 	/*
@@ -47,6 +31,7 @@ std::string open_file(std::string filePath)
 
 	return content;
 }
+#pragma endregion
 
 int main(int argc, char *argv[])
 {
@@ -69,7 +54,7 @@ int main(int argc, char *argv[])
 
 	#pragma region pre-execution
 	std::istringstream fileStream(file_content);
-	std::string	line;
+	std::string line;
 
 	Block topNode = Block();
 	std::unordered_map<unsigned int, Block*> tab_table =
@@ -77,7 +62,7 @@ int main(int argc, char *argv[])
 		{0, &topNode}
 	};
 	bool is_multi_line_commented =	false;
-	int	line_count = 0;
+	int line_count = 0;
 	#pragma endregion
 
 	#pragma region execution
@@ -95,14 +80,6 @@ int main(int argc, char *argv[])
 			remove tabs and etc).
 		*/
 		Scan(line, is_multi_line_commented, tab_level, filtered_line, file_path, line_count);
-
-		// if(is_single_line_commented || is_multi_line_commented)
-		// {
-		// 	if(is_single_line_commented)
-		// 		is_single_line_commented = false;
-			
-		// 	continue;
-		// }
 		
 		/*
 			Parsing part ->
@@ -110,7 +87,7 @@ int main(int argc, char *argv[])
 			The parsing part will check the syntax and create a syntatic tree
 			of it thourgh recursion.
 		*/
-		Node* object = Parse(filtered_line, tab_level, file_path, line_count);
+		Node* object = Parse(filtered_line, tab_level, tab_table, file_path, line_count);
 		if(object != nullptr)
 			tab_table[tab_level]->addChild(object);
 	}
@@ -125,4 +102,4 @@ int main(int argc, char *argv[])
 	#pragma endregion
 
 	Terminate(0);
-}
+}	

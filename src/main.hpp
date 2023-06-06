@@ -10,4 +10,7 @@
 #include <signal.h>
 #include <unordered_map>
 
-extern std::string reserved_keywords[9];
+#include "debug.hpp"
+#include "scanner.hpp"
+#include "parser.hpp"
+#include "syntree/block.hpp"

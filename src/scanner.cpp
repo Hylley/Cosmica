@@ -10,23 +10,23 @@ void Scan(std::string& line, bool& is_multi_line_commented, int& tab_level, std:
 	if(!is_multi_line_commented)
 	{
 		// If is an valid multi comment openning
-		if(std::regex_match(line, matches, multiLineComment[0]))
+		if(std::regex_match(line, matches, multi_line_comment[0]))
 		{
 			line = matches[1];
 			is_multi_line_commented = true;
 		}
 		// If is an valid single line comment openning
-		else if(std::regex_match(line, matches, singleLineComment))
+		else if(std::regex_match(line, matches, single_line_comment))
 		{
 			line = matches[1];
 		}
 	}
 	else
 	{
-		if(std::regex_match(line, multiLineComment[2]))
+		if(std::regex_match(line, multi_line_comment[2]))
 			ThrowException(SyntaxError, file_name, line_number, "Fechamento de comentário precisa de linha exclusiva");
 
-		if(std::regex_match(line, matches, multiLineComment[1]))
+		if(std::regex_match(line, matches, multi_line_comment[1]))
 		{
 			line = matches[1];
 			is_multi_line_commented = false;
@@ -56,14 +56,13 @@ void Scan(std::string& line, bool& is_multi_line_commented, int& tab_level, std:
 
 		if(ident[i] == ' ')
 		{
-			if(spaces < spaces_equivalent_to_tab - 1)
-			{
-				spaces++;
-				continue;
-			}
+			spaces++;
 
-			spaces = 0;
-			tabs++;
+			if(spaces == spaces_equivalent_to_tab)
+			{
+				spaces = 0;
+				tabs++;
+			}
 		}
 	}
 

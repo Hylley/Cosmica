@@ -3,8 +3,8 @@
 #pragma region regex definition
 std::regex invisibles("^[ \t\n]*$");
 std::regex tabs("^(\t*[ ]*)(.*)");
-std::regex singleLineComment("(.*)--.*");
-std::regex multiLineComment[3] =
+std::regex single_line_comment("(.*)--.*");
+std::regex multi_line_comment[3] =
 {
 	std::regex ("(.*)--\\[\\[.*"), // Open comment
 	std::regex (".*\\]\\]"), // Close comment
@@ -12,8 +12,7 @@ std::regex multiLineComment[3] =
 };
 #pragma endregion
 
-
-Node* Parse(std::string& line, int tab_level, std::string& file_name, int& line_number)
+Node* Parse(std::string& line, int tab_level, std::unordered_map<unsigned int, Block*>& tab_table, std::string& file_name, int& line_number)
 {
 	#if SHOW_LINES_PARSING
 	std::cout << "{ " << line <<" }" << std::endl;
